@@ -1,0 +1,52 @@
+.stat-panel {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
+}
+
+.stat-panel > .label {
+    width: 2em;
+    font-size: 50px;
+    text-align: center;
+}
+
+.inner-stat-panel {
+    display: flex;
+    flex-direction: column;
+    /* border: 1px solid black;*/
+    padding: 10px;
+    gap: 10px;
+    flex: 1;
+}
+
+.stat-panel-field {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.stat-panel-field > .label {
+    width: 2em;
+    color: rgba(var(--color1), 1);
+}
+
+.stat-panel-field > .slider {
+    flex: 1;
+}
+
+.stat-panel-field > .spinbox {
+    font: inherit;
+    width: 2em;
+    text-align: center;
+    padding: 3px;
+    -moz-appearance: textfield; /* Hide spinbox arrows in firefox. */
+}
+
+/* Hide spinbox arrows in the rest of browsers. */
+.stat-panel-field > .spinbox::-webkit-outer-spin-button,
+.stat-panel-field > .spinbox::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
