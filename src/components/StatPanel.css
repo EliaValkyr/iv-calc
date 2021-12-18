@@ -27,6 +27,6 @@
     background-color: rgba(var(--nordBlue), 0.5);
 }
 
-.inner-stat-panel > .main {
+.inner-stat-panel > .final-stat {
     background-color: rgba(var(--nordGreen), 0.5);
 }

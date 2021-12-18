@@ -33,3 +33,10 @@ export function computeFinalStat(statType: StatType, baseStat: number, ev: numbe
     }
 }
 
+export function computeMinFinalStat(statType: StatType, baseStat: number, ev: number, level: number, natureMult: number): number {
+    return computeFinalStat(statType, baseStat, ev, /*iv*/ 0, level, natureMult)
+}
+
+export function computeMaxFinalStat(statType: StatType, baseStat: number, ev: number, level: number, natureMult: number): number {
+    return computeFinalStat(statType, baseStat, ev, /*iv*/ 31, level, natureMult)
+}
