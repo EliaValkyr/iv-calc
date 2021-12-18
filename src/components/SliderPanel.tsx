@@ -9,7 +9,7 @@ export interface SliderPanelProps {
     className: string,
 }
 
-export interface SliderPanelState {
+interface SliderPanelState {
     value: number,
 }
 
