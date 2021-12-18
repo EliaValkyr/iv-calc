@@ -1,18 +1,37 @@
 import React from 'react';
 import "./PokemonMainInfoPanel.css"
+import Autocomplete from 'react-autocomplete';
 import { MAX_LEVEL } from '../constants';
+import data from '../PokemonData.json'
+import { Nature } from '../nature';
 
 export interface PokemonMainInfoPanelProps {
     level: number,
     species: string,
+    natureString: string,
     onLevelChanged: ((value: number) => void),
     onSpeciesChanged: ((species: string) => void),
+    onNatureChanged: ((nature: string) => void),
 }
 
 export class PokemonMainInfoPanel extends React.Component<PokemonMainInfoPanelProps> {
     render() {
+        const speciesList = data.map(x => x.Species)
+
         return (
             <div className="pokemon-main-info-panel">
+                {/* <Autocomplete
+                    getItemValue={(item) => item.label}
+                    items={speciesList}
+                    renderItem={(item, isHighlighted) =>
+                        <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+                        {item.label}
+                        </div>
+                    }
+                    value={this.state.species2 ? this.state.species2 : ''}
+                    onChange={(e) => console.log(e.target.value)}
+                    onSelect={(val) => console.log(val)}
+                /> */}
                 <div className="subpanel">
                     <span className="label">Level</span>
                     <input 
@@ -28,10 +47,19 @@ export class PokemonMainInfoPanel extends React.Component<PokemonMainInfoPanelPr
                 <div className="subpanel">
                     <span className="label">Species</span>
                     <input 
-                        className="spinbox"
+                        className="textfield"
                         type="text"
                         value={this.props.species} 
                         onInput={(e: React.FormEvent<HTMLInputElement>) => this.props.onSpeciesChanged(e.currentTarget.value)} 
+                    />
+                </div>
+                <div className="subpanel">
+                    <span className="label">Nature</span>
+                    <input 
+                        className="textfield"
+                        type="text"
+                        value={this.props.natureString} 
+                        onInput={(e: React.FormEvent<HTMLInputElement>) => this.props.onNatureChanged(e.currentTarget.value)} 
                     />
                 </div>
             </div>

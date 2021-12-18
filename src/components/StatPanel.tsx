@@ -7,12 +7,13 @@ import { IVRangePanel } from "./IVRangePanel"
 import { BaseStatPanel } from "./BaseStatPanel"
 import { MAX_EV } from "../constants"
 import { Clamp } from "../utils"
+import { Nature } from "../nature"
 
 export interface StatPanelProps {
     statType: StatType,
     baseStat: number,
     level: number,
-    natureMult: number,
+    nature: Nature,
 }
 
 interface StatPanelState {
@@ -25,14 +26,16 @@ export class StatPanel extends React.Component<StatPanelProps, StatPanelState> {
     constructor(props: StatPanelProps) {
         super(props)
 
-        const {statType, baseStat, level, natureMult} = this.props
-        const finalStat = computeMinFinalStat(statType, baseStat, /*ev*/ 0, level, natureMult)
+        const {statType, baseStat, level, nature} = this.props
+        const finalStat = computeMinFinalStat(statType, baseStat, /*ev*/ 0, level, nature.getMultiplier(statType))
         this.state = {ev: 0, finalStat: finalStat}
     }
 
     recomputeLimits () {
-        const {statType, baseStat, level, natureMult} = this.props
+        const {statType, baseStat, level, nature} = this.props
         const {ev} = this.state
+
+        const natureMult = nature.getMultiplier(statType)
 
         const minFinalStat = computeMinFinalStat(statType, baseStat, ev, level, natureMult)
         const maxFinalStat = computeMaxFinalStat(statType, baseStat, ev, level, natureMult)
@@ -41,7 +44,7 @@ export class StatPanel extends React.Component<StatPanelProps, StatPanelState> {
     }
 
     render() {
-        const {statType, baseStat, level, natureMult} = this.props
+        const {statType, baseStat, level, nature} = this.props
         const {ev, finalStat} = this.state
 
         const evValueChanged = (evValue: number) => {
@@ -54,6 +57,7 @@ export class StatPanel extends React.Component<StatPanelProps, StatPanelState> {
             this.setState({finalStat: finalStatValue})
         }
 
+        const natureMult = nature.getMultiplier(statType)
         const minFinalStat = computeMinFinalStat(statType, baseStat, ev, level, natureMult)
         const maxFinalStat = computeMaxFinalStat(statType, baseStat, ev, level, natureMult)
         const actualFinalStat = Clamp(finalStat, minFinalStat, maxFinalStat)
@@ -65,6 +69,7 @@ export class StatPanel extends React.Component<StatPanelProps, StatPanelState> {
                     <BaseStatPanel
                         statType={statType}
                         baseStat={baseStat}
+                        natureMult={natureMult}
                     />
                 </div>
                 <div className="inner-stat-panel">
@@ -79,7 +84,7 @@ export class StatPanel extends React.Component<StatPanelProps, StatPanelState> {
                     />
 
                     <SliderPanel 
-                        key={this.props.level + " " + this.props.baseStat + " " + this.props.natureMult}
+                        key={level + " " + baseStat + " " + natureMult}
                         className="final-stat" 
                         min={minFinalStat} 
                         max={maxFinalStat} 

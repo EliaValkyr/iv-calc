@@ -1,8 +1,8 @@
 export enum StatType {
     HP = "HP",
     Attack = "Atk",
-    Defence = "Def",
+    Defense = "Def",
     SpAttack = "SpA",
-    SpDefence = "SpD",
+    SpDefense = "SpD",
     Speed = "Spe",
 }

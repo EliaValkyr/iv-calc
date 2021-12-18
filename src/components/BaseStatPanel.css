@@ -7,13 +7,23 @@
 
 .base-stat-panel > .base-stat-text-label {
     width: 2em;
-    color: rgba(var(--nordBlack), 1);
     font-size: 45px;
     text-align: center;
 }
 
 .base-stat-panel > .base-stat-value-label {
     width: 8em;
-    color: rgba(var(--nordBlack), 1);
     text-align: center;
+}
+
+.unchanged-value-color {
+    color: rgba(var(--nordBlack), 1);
+}
+
+.increased-value-color {
+    color: rgba(var(--nordGreen), 1);
+}
+
+.decreased-value-color {
+    color: rgba(var(--nordRed), 1);
 }

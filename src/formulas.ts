@@ -26,9 +26,9 @@ export function computeFinalStat(statType: StatType, baseStat: number, ev: numbe
         case StatType.HP:
             return computeHPFinalStat(baseStat, ev, iv, level)
         case StatType.Attack:
-        case StatType.Defence:
+        case StatType.Defense:
         case StatType.SpAttack:
-        case StatType.SpDefence:
+        case StatType.SpDefense:
         case StatType.Speed:
             return computeNonHPFinalStat(baseStat, ev, iv, level, natureMult)
         default:
