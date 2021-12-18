@@ -3,7 +3,6 @@ import './App.css';
 import { AllBaseStatsPanel } from './components/AllBaseStatsPanel';
 import { PokemonMainInfoPanel } from './components/PokemonMainInfoPanel';
 import { MAX_LEVEL } from './constants';
-import { Nature, natureArray } from './nature';
 import { Clamp } from './utils';
 
 interface AppProps {
