@@ -2,7 +2,8 @@ import React from "react"
 import "./StatPanel.css"
 import { SliderPanel } from "./SliderPanel"
 import { StatType } from "../enums/StatType"
-import { computeMaxFinalStat, computeMinFinalStat } from "../Formulas"
+import { computeIVRange, computeMaxFinalStat, computeMinFinalStat } from "../Formulas"
+import { IVRangePanel } from "./IVRangePanel"
 
 export interface StatPanelProps {
     statType: StatType,
@@ -45,6 +46,7 @@ export class StatPanel extends React.Component<StatPanelProps, StatPanelState> {
         const minFinalStat = computeMinFinalStat(statType, baseStat, ev, level, natureMult)
         const maxFinalStat = computeMaxFinalStat(statType, baseStat, ev, level, natureMult)
 
+        const [minIV, maxIV] = computeIVRange(statType, baseStat, ev, level, natureMult, finalStat)
         return (
             <div className="stat-panel">
                 <span className="label">{this.props.statType}</span>
@@ -67,6 +69,12 @@ export class StatPanel extends React.Component<StatPanelProps, StatPanelState> {
                         currentValue={finalStat} 
                         labelText="Stat" 
                         onValueChanged={finalStatValueChanged}
+                    />
+                </div>
+                <div>
+                    <IVRangePanel
+                        minIV={minIV}
+                        maxIV={maxIV}
                     />
                 </div>
             </div>

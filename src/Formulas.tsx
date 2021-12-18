@@ -40,3 +40,28 @@ export function computeMinFinalStat(statType: StatType, baseStat: number, ev: nu
 export function computeMaxFinalStat(statType: StatType, baseStat: number, ev: number, level: number, natureMult: number): number {
     return computeFinalStat(statType, baseStat, ev, /*iv*/ 31, level, natureMult)
 }
+
+export function computeIVRange(statType: StatType, baseStat: number, ev: number, level: number, natureMult: number, desiredFinalStat: number): [number, number] {
+    
+    // Returns the smallest value in the [minValue, maxValue] range such that lessThanComparator(value) returns false.
+    // Returns maxValue if none do.
+    function lowerBound(minValue: number, maxValue: number, lessThanComparator: ((value: number) => boolean)) {
+        while (minValue < maxValue) {
+            const currentValue = minValue + Math.floor((maxValue - minValue) / 2)
+            const result: boolean = lessThanComparator(currentValue)
+            if (result) {
+                // Comparator returned true: value is still too small.
+                minValue = currentValue + 1
+
+            } else {
+                // Comparator returned false: value is not too small.
+                maxValue = currentValue
+            }
+        }
+        return minValue
+    }
+    const maxPossibleIV = 31
+    const minValidIV = lowerBound(0, maxPossibleIV + 1, (ivValue: number) => { return computeFinalStat(statType, baseStat, ev, ivValue, level, natureMult) < desiredFinalStat })
+    const minBiggerIV = lowerBound(0, maxPossibleIV + 1, (ivValue: number) => { return computeFinalStat(statType, baseStat, ev, ivValue, level, natureMult) < desiredFinalStat + 1 })
+    return [minValidIV, minBiggerIV - 1]
+}

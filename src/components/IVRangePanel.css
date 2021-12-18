@@ -1,0 +1,9 @@
+
+.iv-range-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 12px; /* ask alba how not to hardcode this*/ 
+    background-color: rgba(var(--nordRed), 1);
+}

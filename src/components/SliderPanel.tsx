@@ -22,26 +22,27 @@ export class SliderPanel extends React.Component<SliderPanelProps> {
     render() {
         const {min, max, step, currentValue, labelText, className, onValueChanged} = this.props
 
-        return <div className={"slider-panel " + className}>
-            <span className="label">{labelText + " (" + min + ", " + max + ")"}</span>
-            <input 
-                className="slider" 
-                type="range" 
-                min={min} 
-                max={max} 
-                step={step}
-                value={currentValue} 
-                onChange={(e: React.FormEvent<HTMLInputElement>) => onValueChanged(parseInt(e.currentTarget.value))} 
-            />
-            <input 
-                className="spinbox"
-                type="number" 
-                min={min} 
-                max={max} 
-                step={step}
-                value={currentValue} 
-                onInput={(e: React.FormEvent<HTMLInputElement>) => onValueChanged(parseInt(e.currentTarget.value))} 
-            />
-        </div>
+        return (
+            <div className={"slider-panel " + className}>
+                <span className="label">{labelText + " (" + min + ", " + max + ")"}</span>
+                <input 
+                    className="slider" 
+                    type="range" 
+                    min={min} 
+                    max={max} 
+                    step={step}
+                    value={currentValue} 
+                    onChange={(e: React.FormEvent<HTMLInputElement>) => onValueChanged(parseInt(e.currentTarget.value))} 
+                />
+                <input 
+                    className="spinbox"
+                    type="number" 
+                    min={min} 
+                    max={max} 
+                    step={step}
+                    value={currentValue} 
+                    onInput={(e: React.FormEvent<HTMLInputElement>) => onValueChanged(parseInt(e.currentTarget.value))} 
+                />
+            </div>)
     }
 }
