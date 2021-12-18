@@ -8,6 +8,9 @@ function computeScaledFinalStat(baseStat: number, ev: number, iv: number, level:
 }
 
 function computeHPFinalStat(baseStat: number, ev: number, iv: number, level: number): number {
+    if (baseStat == 1)
+        return 1; // Special case for Shedinja.
+        
     const hpStat: number = computeScaledFinalStat(baseStat, ev, iv, level) + level + 10
     return hpStat
 }

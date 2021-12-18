@@ -1,0 +1,8 @@
+.pokemon-main-info-panel {
+    display: flex;
+    flex-direction: row;
+    padding-left: 20px;
+    align-items: center;
+    width: 100%;
+    gap: 30px;
+}

@@ -2,7 +2,6 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    background-color: rgba(var(--nordWhite), 1);
     border-bottom: 1px solid gray;
 }
 .stat-panel:last-child {

@@ -1,20 +1,34 @@
 import React from 'react';
 import './App.css';
-import { StatPanel } from './components/StatPanel';
-import { StatType } from './enums/StatType';
+import { AllBaseStatsPanel } from './components/AllBaseStatsPanel';
+import { PokemonMainInfoPanel } from './components/PokemonMainInfoPanel';
 
-class App extends React.Component {
+interface AppProps {
+
+}
+
+interface AppState {
+    level: number,
+}
+
+class App extends React.Component<AppProps, AppState> {
+    constructor(props: AppProps) {
+        super(props)
+
+        this.state = {level: 70}
+    }
+
     render() {
-        const level = 70
+        const levelChanged = (levelValue: number) => {
+            const sanitizedlevelValue = Math.max(0, Math.min(levelValue, 100))
+            this.setState({level: sanitizedlevelValue})
+        }
+
         return (
             <div className="container">
                 <div className="app">
-                    <StatPanel statType={StatType.HP} baseStat={100} level={level} natureMult={1}/>
-                    <StatPanel statType={StatType.Attack} baseStat={100} level={level} natureMult={1}/>
-                    <StatPanel statType={StatType.Defence} baseStat={100} level={level} natureMult={1}/>
-                    <StatPanel statType={StatType.SpAttack} baseStat={100} level={level} natureMult={1}/>
-                    <StatPanel statType={StatType.SpDefence} baseStat={100} level={level} natureMult={1}/>
-                    <StatPanel statType={StatType.Speed} baseStat={100} level={level} natureMult={1}/>
+                    <PokemonMainInfoPanel level={this.state.level} onLevelChanged={levelChanged}/>
+                    <AllBaseStatsPanel level={this.state.level}/>
                 </div>
             </div >
         )

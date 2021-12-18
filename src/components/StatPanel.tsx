@@ -23,8 +23,18 @@ export class StatPanel extends React.Component<StatPanelProps, StatPanelState> {
     constructor(props: StatPanelProps) {
         super(props)
 
-        const minFinalStat = computeMinFinalStat(props.statType, props.baseStat, /*ev*/ 0, props.level, props.natureMult)
-        this.state = {ev: 0, finalStat: minFinalStat}
+        this.state = {ev: 0, finalStat: 0}
+        this.recomputeLimits()
+    }
+
+    recomputeLimits () {
+        const {statType, baseStat, level, natureMult} = this.props
+        const {ev} = this.state
+
+        const minFinalStat = computeMinFinalStat(statType, baseStat, ev, level, natureMult)
+        const maxFinalStat = computeMaxFinalStat(statType, baseStat, ev, level, natureMult)
+        const cappedFinalStatValue = Math.max(minFinalStat, Math.min(this.state.finalStat, maxFinalStat))
+        this.setState({finalStat: cappedFinalStatValue})
     }
 
     render() {
@@ -33,11 +43,8 @@ export class StatPanel extends React.Component<StatPanelProps, StatPanelState> {
 
         const evValueChanged = (evValue: number) => {
             const sanitizedEVValue = Math.max(0, Math.min(evValue, 252))
-            const minFinalStat = computeMinFinalStat(statType, baseStat, sanitizedEVValue, level, natureMult)
-            const maxFinalStat = computeMaxFinalStat(statType, baseStat, sanitizedEVValue, level, natureMult)
-            const cappedFinalStatValue = Math.max(minFinalStat, Math.min(this.state.finalStat, maxFinalStat))
-
-            this.setState({ev: sanitizedEVValue, finalStat: cappedFinalStatValue})
+            this.setState({ev: sanitizedEVValue})
+            this.recomputeLimits()
         }
 
         const finalStatValueChanged = (finalStatValue: number) => {
