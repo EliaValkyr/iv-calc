@@ -1,0 +1,32 @@
+.slider-panel {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 5px 10px 5px;
+    gap: 10px;
+}
+
+.slider-panel > .label {
+    width: 7em;
+    color: rgba(var(--nordBlack), 1);
+}
+
+.slider-panel > .slider {
+    color:green;
+    flex: 1;
+}
+
+.slider-panel > .spinbox {
+    font: inherit;
+    width: 2em;
+    text-align: center;
+    padding: 3px;
+    -moz-appearance: textfield; /* Hide spinbox arrows in firefox. */
+}
+
+/* Hide spinbox arrows in the rest of browsers. */
+.slider-panel > .spinbox::-webkit-outer-spin-button,
+.slider-panel > .spinbox::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

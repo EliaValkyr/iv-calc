@@ -27,6 +27,10 @@ class App extends React.Component {
                 <div className="app">
                     <StatPanel statName="HP" baseStat={100} ev={0} iv={0} natureMult={1}/>
                     <StatPanel statName="Atk" baseStat={100} ev={0} iv={0} natureMult={1}/>
+                    <StatPanel statName="Def" baseStat={100} ev={0} iv={0} natureMult={1}/>
+                    <StatPanel statName="SpA" baseStat={100} ev={0} iv={0} natureMult={1}/>
+                    <StatPanel statName="SpD" baseStat={100} ev={0} iv={0} natureMult={1}/>
+                    <StatPanel statName="Spe" baseStat={100} ev={0} iv={0} natureMult={1}/>
                 </div>
             </div >
         )

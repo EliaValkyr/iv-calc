@@ -1,5 +1,12 @@
 :root {
-    --color1: 128, 0, 128;
+    --nordWhite: 236, 239, 244;
+    --nordBlack: 46, 52, 64;
+    --nordRed: 191, 97, 106;
+    --nordOrange: 208, 135, 112;
+    --nordYellow: 235, 203, 139;
+    --nordGreen: 163, 190, 140;
+    --nordBlue: 94, 129, 172;
+    --nordPurple: 180, 142, 173;
 }
 
 body {
