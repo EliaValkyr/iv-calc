@@ -1,0 +1,19 @@
+.base-stat-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3px;
+}
+
+.base-stat-panel > .base-stat-text-label {
+    width: 2em;
+    color: rgba(var(--nordBlack), 1);
+    font-size: 45px;
+    text-align: center;
+}
+
+.base-stat-panel > .base-stat-value-label {
+    width: 8em;
+    color: rgba(var(--nordBlack), 1);
+    text-align: center;
+}

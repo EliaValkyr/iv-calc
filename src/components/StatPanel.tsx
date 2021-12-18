@@ -4,6 +4,7 @@ import { SliderPanel } from "./SliderPanel"
 import { StatType } from "../enums/StatType"
 import { computeIVRange, computeMaxFinalStat, computeMinFinalStat } from "../Formulas"
 import { IVRangePanel } from "./IVRangePanel"
+import { BaseStatPanel } from "./BaseStatPanel"
 
 export interface StatPanelProps {
     statType: StatType,
@@ -49,7 +50,12 @@ export class StatPanel extends React.Component<StatPanelProps, StatPanelState> {
         const [minIV, maxIV] = computeIVRange(statType, baseStat, ev, level, natureMult, finalStat)
         return (
             <div className="stat-panel">
-                <span className="label">{this.props.statType}</span>
+                <div>
+                    <BaseStatPanel
+                        statType={statType}
+                        baseStat={baseStat}
+                    />
+                </div>
                 <div className="inner-stat-panel">
                     <SliderPanel 
                         className="ev" 

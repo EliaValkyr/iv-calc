@@ -9,14 +9,6 @@
     border-bottom: none;
 }
 
-.stat-panel > .label {
-    width: 2em;
-    color: rgba(var(--nordBlack), 1);
-    font-size: 50px;
-    text-align: center;
-    padding: 0px 10px 0px;
-}
-
 .inner-stat-panel {
     display: flex;
     flex-direction: column;
