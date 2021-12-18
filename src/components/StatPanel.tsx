@@ -2,9 +2,11 @@ import React from "react"
 import "./StatPanel.css"
 import { SliderPanel } from "./SliderPanel"
 import { StatType } from "../enums/StatType"
-import { computeIVRange, computeMaxFinalStat, computeMinFinalStat } from "../Formulas"
+import { computeIVRange, computeMaxFinalStat, computeMinFinalStat } from "../formulas"
 import { IVRangePanel } from "./IVRangePanel"
 import { BaseStatPanel } from "./BaseStatPanel"
+import { MAX_EV } from "../constants"
+import { Clamp } from "../utils"
 
 export interface StatPanelProps {
     statType: StatType,
@@ -23,8 +25,9 @@ export class StatPanel extends React.Component<StatPanelProps, StatPanelState> {
     constructor(props: StatPanelProps) {
         super(props)
 
-        this.state = {ev: 0, finalStat: 0}
-        this.recomputeLimits()
+        const {statType, baseStat, level, natureMult} = this.props
+        const finalStat = computeMinFinalStat(statType, baseStat, /*ev*/ 0, level, natureMult)
+        this.state = {ev: 0, finalStat: finalStat}
     }
 
     recomputeLimits () {
@@ -33,7 +36,7 @@ export class StatPanel extends React.Component<StatPanelProps, StatPanelState> {
 
         const minFinalStat = computeMinFinalStat(statType, baseStat, ev, level, natureMult)
         const maxFinalStat = computeMaxFinalStat(statType, baseStat, ev, level, natureMult)
-        const cappedFinalStatValue = Math.max(minFinalStat, Math.min(this.state.finalStat, maxFinalStat))
+        const cappedFinalStatValue = Clamp(this.state.finalStat, minFinalStat, maxFinalStat)
         this.setState({finalStat: cappedFinalStatValue})
     }
 
@@ -42,7 +45,7 @@ export class StatPanel extends React.Component<StatPanelProps, StatPanelState> {
         const {ev, finalStat} = this.state
 
         const evValueChanged = (evValue: number) => {
-            const sanitizedEVValue = Math.max(0, Math.min(evValue, 252))
+            const sanitizedEVValue = Clamp(evValue, 0, MAX_EV)
             this.setState({ev: sanitizedEVValue})
             this.recomputeLimits()
         }
@@ -53,8 +56,9 @@ export class StatPanel extends React.Component<StatPanelProps, StatPanelState> {
 
         const minFinalStat = computeMinFinalStat(statType, baseStat, ev, level, natureMult)
         const maxFinalStat = computeMaxFinalStat(statType, baseStat, ev, level, natureMult)
+        const actualFinalStat = Clamp(finalStat, minFinalStat, maxFinalStat)
 
-        const [minIV, maxIV] = computeIVRange(statType, baseStat, ev, level, natureMult, finalStat)
+        const [minIV, maxIV] = computeIVRange(statType, baseStat, ev, level, natureMult, actualFinalStat)
         return (
             <div className="stat-panel">
                 <div>
@@ -75,11 +79,12 @@ export class StatPanel extends React.Component<StatPanelProps, StatPanelState> {
                     />
 
                     <SliderPanel 
+                        key={this.props.level + " " + this.props.baseStat + " " + this.props.natureMult}
                         className="final-stat" 
                         min={minFinalStat} 
                         max={maxFinalStat} 
                         step={1} 
-                        currentValue={finalStat} 
+                        currentValue={actualFinalStat} 
                         labelText="Stat" 
                         onValueChanged={finalStatValueChanged}
                     />

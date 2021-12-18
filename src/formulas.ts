@@ -1,9 +1,10 @@
+import { MAX_IV, MAX_LEVEL } from "./constants"
 import { StatType } from "./enums/StatType"
 
 function computeScaledFinalStat(baseStat: number, ev: number, iv: number, level: number): number {
     const evStat: number = Math.floor(ev / 4)
     const unscaledStat: number = 2 * baseStat + iv + evStat
-    const scaledStat: number = Math.floor(unscaledStat * level / 100)
+    const scaledStat: number = Math.floor(unscaledStat * level / MAX_LEVEL)
     return scaledStat
 }
 
@@ -41,7 +42,7 @@ export function computeMinFinalStat(statType: StatType, baseStat: number, ev: nu
 }
 
 export function computeMaxFinalStat(statType: StatType, baseStat: number, ev: number, level: number, natureMult: number): number {
-    return computeFinalStat(statType, baseStat, ev, /*iv*/ 31, level, natureMult)
+    return computeFinalStat(statType, baseStat, ev, MAX_IV, level, natureMult)
 }
 
 export function computeIVRange(statType: StatType, baseStat: number, ev: number, level: number, natureMult: number, desiredFinalStat: number): [number, number] {
@@ -63,8 +64,7 @@ export function computeIVRange(statType: StatType, baseStat: number, ev: number,
         }
         return minValue
     }
-    const maxPossibleIV = 31
-    const minValidIV = lowerBound(0, maxPossibleIV + 1, (ivValue: number) => { return computeFinalStat(statType, baseStat, ev, ivValue, level, natureMult) < desiredFinalStat })
-    const minBiggerIV = lowerBound(0, maxPossibleIV + 1, (ivValue: number) => { return computeFinalStat(statType, baseStat, ev, ivValue, level, natureMult) < desiredFinalStat + 1 })
+    const minValidIV = lowerBound(0, MAX_IV + 1, (ivValue: number) => { return computeFinalStat(statType, baseStat, ev, ivValue, level, natureMult) < desiredFinalStat })
+    const minBiggerIV = lowerBound(0, MAX_IV + 1, (ivValue: number) => { return computeFinalStat(statType, baseStat, ev, ivValue, level, natureMult) < desiredFinalStat + 1 })
     return [minValidIV, minBiggerIV - 1]
 }

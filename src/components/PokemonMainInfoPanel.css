@@ -1,8 +1,15 @@
 .pokemon-main-info-panel {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.pokemon-main-info-panel > .subpanel {
+    display: flex;
     flex-direction: row;
     padding-left: 20px;
     align-items: center;
     width: 100%;
-    gap: 30px;
+    gap: 10px;
 }

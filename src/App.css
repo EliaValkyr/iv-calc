@@ -3,6 +3,6 @@
     flex-direction: column;
     max-width: 1000px;
     background-color: rgba(var(--nordWhite), 1);
-    gap: 30px;
-    padding-top: 30px;
+    gap: 10px;
+    padding-top: 20px;
 }
