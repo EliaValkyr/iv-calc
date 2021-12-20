@@ -1,7 +1,6 @@
 .pokemon-main-info-panel {
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 10px;
 }
 
@@ -12,4 +11,42 @@
     align-items: center;
     width: 100%;
     gap: 10px;
+}
+
+.pokemon-main-info-panel > .vert-subpanel {
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+    align-items: center;
+    align-self: start;
+    gap: 10px;
+}
+
+.pokemon-main-info-panel > .subpanel > .label {
+    width: 3em;
+}
+
+.pokemon-main-info-panel > .subpanel > .spinbox {
+    width: 40px;
+}
+
+.autocomplete {
+    width: 140px;
+}
+
+.autocomplete-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px 10px 0px;
+    border-bottom: 1px solid gray;
+    min-height: 25px;
+}
+
+.autocomplete-item:last-child {
+    border-bottom: none;
+}
+
+.nature-autocomplete-text {
+    width: 4.5em;
 }

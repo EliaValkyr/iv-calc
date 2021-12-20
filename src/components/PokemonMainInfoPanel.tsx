@@ -1,9 +1,9 @@
 import React from 'react';
 import "./PokemonMainInfoPanel.css"
 import Autocomplete from 'react-autocomplete';
-import { MAX_LEVEL } from '../constants';
-import data from '../PokemonData.json'
-import { Nature } from '../nature';
+import { MAX_LEVEL, SPRITE_FOLDER } from '../constants';
+import allPokemonData from '../PokemonData.json'
+import { Nature, natureArray } from '../nature';
 
 export interface PokemonMainInfoPanelProps {
     level: number,
@@ -15,26 +15,38 @@ export interface PokemonMainInfoPanelProps {
 }
 
 export class PokemonMainInfoPanel extends React.Component<PokemonMainInfoPanelProps> {
-    render() {
-        const speciesList = data.map(x => x.Species)
 
-        const pokemonData = data.find(x => x.Species.toLowerCase() == this.props.species.toLowerCase())
-        const spritePath = pokemonData == undefined ? "unknown.png" : pokemonData.Sprite
+    constructor(props: PokemonMainInfoPanelProps) {
+        super(props)
+    }
+
+    render() {
+        const pokemonData = allPokemonData.find(x => x.Species.toLowerCase() === this.props.species.toLowerCase())
+        const spritePath = pokemonData === undefined ? "unknown.png" : pokemonData.Sprite
 
         return (
             <div className="pokemon-main-info-panel">
-                {/* <Autocomplete
-                    getItemValue={(item) => item.label}
-                    items={speciesList}
-                    renderItem={(item, isHighlighted) =>
-                        <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
-                        {item.label}
-                        </div>
-                    }
-                    value={this.state.species2 ? this.state.species2 : ''}
-                    onChange={(e) => console.log(e.target.value)}
-                    onSelect={(val) => console.log(val)}
-                /> */}
+                <div className="vert-subpanel">
+                    <img src={SPRITE_FOLDER + spritePath} />
+                    <Autocomplete
+                        items={allPokemonData}
+                        getItemValue={item => item.Species}
+                        shouldItemRender={(item, value) => { return value.length > 1 && item.Species.toLowerCase().indexOf(value.toLowerCase()) !== -1 }}
+                        renderItem={(item, isHighlighted) =>
+                            <div 
+                                className="autocomplete-item" 
+                                style={{ background: isHighlighted ? 'lightgray' : 'white' }}
+                            >
+                                <img src={SPRITE_FOLDER + item.Sprite} />
+                                {"#" + item.ID + " - " + item.Species}
+                            </div>
+                        }
+                        value={this.props.species}
+                        onChange={(_, value) => this.props.onSpeciesChanged(value)}
+                        onSelect={value => this.props.onSpeciesChanged(value)}
+                        inputProps={{ className: "autocomplete"}}
+                    />
+                </div>
                 <div className="subpanel">
                     <span className="label">Level</span>
                     <input 
@@ -48,22 +60,26 @@ export class PokemonMainInfoPanel extends React.Component<PokemonMainInfoPanelPr
                     />
                 </div>
                 <div className="subpanel">
-                    <span className="label">Species</span>
-                    <input 
-                        className="textfield"
-                        type="text"
-                        value={this.props.species} 
-                        onInput={(e: React.FormEvent<HTMLInputElement>) => this.props.onSpeciesChanged(e.currentTarget.value)} 
-                    />
-                    <img src={"resources/sprites/" + spritePath} />
-                </div>
-                <div className="subpanel">
-                    <span className="label">Nature</span>
-                    <input 
-                        className="textfield"
-                        type="text"
-                        value={this.props.natureString} 
-                        onInput={(e: React.FormEvent<HTMLInputElement>) => this.props.onNatureChanged(e.currentTarget.value)} 
+                    <Autocomplete
+                        items={natureArray}
+                        getItemValue={item => item.mName}
+                        renderItem={(nature, isHighlighted) =>
+                            <div 
+                                className="autocomplete-item" 
+                                style={{ background: isHighlighted ? 'lightgray' : 'white' }}
+                            >
+                                <span className="nature-autocomplete-text">{nature.mName}</span>
+                                <span>{nature.mIncreasedStat || nature.mDecreasedStat? "(" : ""}</span>
+                                <span style={{color: 'green'}}>{nature.mIncreasedStat ? "+" + nature.mIncreasedStat : ""}</span>
+                                <span>{nature.mIncreasedStat && nature.mDecreasedStat ? ", " : ""}</span>
+                                <span style={{color: 'red'}}>{nature.mDecreasedStat ? "-" + nature.mDecreasedStat : ""}</span>
+                                <span>{nature.mIncreasedStat || nature.mDecreasedStat ? ")" : ""}</span>
+                            </div>
+                        }
+                        value={this.props.natureString}
+                        onChange={(_, value) => this.props.onNatureChanged(value)}
+                        onSelect={value => this.props.onNatureChanged(value)}
+                        inputProps={{ className: "autocomplete"}}
                     />
                 </div>
             </div>

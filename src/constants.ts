@@ -4,3 +4,4 @@ export const EV_STEP = 4
 export const MAX_LEVEL = 100
 export const NATURE_INCREASE_MULT = 1.1
 export const NATURE_DECREASE_MULT = 0.9
+export const SPRITE_FOLDER = "resources/sprites/"
