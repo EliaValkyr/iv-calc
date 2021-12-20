@@ -1,5 +1,7 @@
 Things to ask alba:
 
-- Global variables
 - How to have multiple panels all with the same height
 - How to add a style to all labels globally (or everything named .label)
+- Fix autocomplete
+- Implement popup dialog for natures
+

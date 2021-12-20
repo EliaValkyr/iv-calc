@@ -18,6 +18,9 @@ export class PokemonMainInfoPanel extends React.Component<PokemonMainInfoPanelPr
     render() {
         const speciesList = data.map(x => x.Species)
 
+        const pokemonData = data.find(x => x.Species.toLowerCase() == this.props.species.toLowerCase())
+        const spritePath = pokemonData == undefined ? "unknown.png" : pokemonData.Sprite
+
         return (
             <div className="pokemon-main-info-panel">
                 {/* <Autocomplete
@@ -52,6 +55,7 @@ export class PokemonMainInfoPanel extends React.Component<PokemonMainInfoPanelPr
                         value={this.props.species} 
                         onInput={(e: React.FormEvent<HTMLInputElement>) => this.props.onSpeciesChanged(e.currentTarget.value)} 
                     />
+                    <img src={"resources/sprites/" + spritePath} />
                 </div>
                 <div className="subpanel">
                     <span className="label">Nature</span>

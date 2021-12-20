@@ -2,17 +2,21 @@ import React from "react"
 import "./IVRangePanel.css"
 
 export interface IVRangeProps {
-    minIV: number,
-    maxIV: number,
+    optIVRange: [number, number] | undefined,
 }
 
 export class IVRangePanel extends React.Component<IVRangeProps> {
     render() {
-        const {minIV, maxIV} = this.props
+        const {optIVRange} = this.props
+        const range_text = optIVRange
+            ? optIVRange[0] === optIVRange[1]
+                ? optIVRange[0].toString()
+                : optIVRange[0].toString() + " - " + optIVRange[1].toString()
+            : "Error"
         return (
             <div className={"iv-range-panel"}>
             <span className="label">IV Range</span>
-            <span className="label">{minIV == maxIV ? minIV : minIV + " - " + maxIV}</span>
+            <span className="label">{range_text}</span>
             </div>)
     }
 }

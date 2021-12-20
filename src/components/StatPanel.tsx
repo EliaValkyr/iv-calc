@@ -5,7 +5,7 @@ import { StatType } from "../enums/StatType"
 import { computeIVRange, computeMaxFinalStat, computeMinFinalStat } from "../formulas"
 import { IVRangePanel } from "./IVRangePanel"
 import { BaseStatPanel } from "./BaseStatPanel"
-import { MAX_EV } from "../constants"
+import { EV_STEP, MAX_EV } from "../constants"
 import { Clamp } from "../utils"
 import { Nature } from "../nature"
 
@@ -62,7 +62,7 @@ export class StatPanel extends React.Component<StatPanelProps, StatPanelState> {
         const maxFinalStat = computeMaxFinalStat(statType, baseStat, ev, level, natureMult)
         const actualFinalStat = Clamp(finalStat, minFinalStat, maxFinalStat)
 
-        const [minIV, maxIV] = computeIVRange(statType, baseStat, ev, level, natureMult, actualFinalStat)
+        const opt_iv_range = computeIVRange(statType, baseStat, ev, level, natureMult, actualFinalStat)
         return (
             <div className="stat-panel">
                 <div>
@@ -76,8 +76,8 @@ export class StatPanel extends React.Component<StatPanelProps, StatPanelState> {
                     <SliderPanel 
                         className="ev" 
                         min={0} 
-                        max={252} 
-                        step={4} 
+                        max={MAX_EV} 
+                        step={EV_STEP} 
                         currentValue={ev} 
                         labelText="EVs" 
                         onValueChanged={evValueChanged}
@@ -96,8 +96,7 @@ export class StatPanel extends React.Component<StatPanelProps, StatPanelState> {
                 </div>
                 <div>
                     <IVRangePanel
-                        minIV={minIV}
-                        maxIV={maxIV}
+                        optIVRange={opt_iv_range}
                     />
                 </div>
             </div>

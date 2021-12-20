@@ -9,7 +9,7 @@ function computeScaledFinalStat(baseStat: number, ev: number, iv: number, level:
 }
 
 function computeHPFinalStat(baseStat: number, ev: number, iv: number, level: number): number {
-    if (baseStat == 1)
+    if (baseStat === 1)
         return 1; // Special case for Shedinja.
         
     const hpStat: number = computeScaledFinalStat(baseStat, ev, iv, level) + level + 10
@@ -45,7 +45,7 @@ export function computeMaxFinalStat(statType: StatType, baseStat: number, ev: nu
     return computeFinalStat(statType, baseStat, ev, MAX_IV, level, natureMult)
 }
 
-export function computeIVRange(statType: StatType, baseStat: number, ev: number, level: number, natureMult: number, desiredFinalStat: number): [number, number] {
+export function computeIVRange(statType: StatType, baseStat: number, ev: number, level: number, natureMult: number, desiredFinalStat: number): [number, number] | undefined {
     
     // Returns the smallest value in the [minValue, maxValue] range such that lessThanComparator(value) returns false.
     // Returns maxValue if none do.
@@ -66,5 +66,7 @@ export function computeIVRange(statType: StatType, baseStat: number, ev: number,
     }
     const minValidIV = lowerBound(0, MAX_IV + 1, (ivValue: number) => { return computeFinalStat(statType, baseStat, ev, ivValue, level, natureMult) < desiredFinalStat })
     const minBiggerIV = lowerBound(0, MAX_IV + 1, (ivValue: number) => { return computeFinalStat(statType, baseStat, ev, ivValue, level, natureMult) < desiredFinalStat + 1 })
+    if (minBiggerIV <= 0 || minValidIV > MAX_IV || minValidIV === minBiggerIV)
+        return undefined
     return [minValidIV, minBiggerIV - 1]
 }

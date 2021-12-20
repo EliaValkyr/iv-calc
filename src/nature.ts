@@ -1,3 +1,4 @@
+import { NATURE_DECREASE_MULT, NATURE_INCREASE_MULT } from "./constants";
 import { StatType } from "./enums/StatType";
 
 export class Nature {
@@ -12,10 +13,10 @@ export class Nature {
     }
 
     getMultiplier(statType: StatType): number {
-        if (statType == this.mIncreasedStat)
-            return 1.1
-        if (statType == this.mDecreasedStat)
-            return 0.9
+        if (statType === this.mIncreasedStat)
+            return NATURE_INCREASE_MULT
+        if (statType === this.mDecreasedStat)
+            return NATURE_DECREASE_MULT
         return 1
     }
 }
