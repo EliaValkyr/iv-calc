@@ -29,7 +29,6 @@ class App extends React.Component<AppProps, AppState> {
         }
         
         const onSpeciesChanged = (species: string) => {
-            console.log("New species: " + species)
             this.setState({species: species})
         }
         

@@ -2,21 +2,46 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 5px 10px 5px;
+    justify-content: center;
+    padding: 0px 10px 0px;
     gap: 10px;
 }
 
-.slider-panel > .label {
-    width: 7em;
-    color: rgba(var(--nordBlack), 1);
+.slider-panel > .extremes-panel {
+    display: flex;
+    flex-direction: row;
+    padding: 13px 0px 12px;
+    width: 2em;
+    justify-content: center;
 }
 
-.slider-panel > .slider {
-    color:green;
+.extremes-panel > .extremes-label {
+    font-size: 12px;
+    width: 2em;
+    height: 100%;
+    text-align: center;
+}
+
+.slider-panel > .stretch {
     flex: 1;
 }
 
-.slider-panel > .spinbox {
+.slider-panel > .central-panel {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 7em;
+    gap: 5px;
+}
+
+.central-panel > .central-label {
+    text-align: center;
+    color: #606060;
+    font-weight: bold;
+}
+
+.slider-panel .spinbox {
     font: inherit;
     width: 2em;
     text-align: center;
@@ -25,8 +50,8 @@
 }
 
 /* Hide spinbox arrows in the rest of browsers. */
-.slider-panel > .spinbox::-webkit-outer-spin-button,
-.slider-panel > .spinbox::-webkit-inner-spin-button {
+.slider-panel .spinbox::-webkit-outer-spin-button,
+.slider-panel .spinbox::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }

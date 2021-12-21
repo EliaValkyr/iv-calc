@@ -26,7 +26,7 @@ export class PokemonMainInfoPanel extends React.Component<PokemonMainInfoPanelPr
 
         return (
             <div className="pokemon-main-info-panel">
-                <div className="vert-subpanel">
+                <div className="vert-subpanel species-panel">
                     <img src={SPRITE_FOLDER + spritePath} />
                     <Autocomplete
                         items={allPokemonData}
@@ -44,43 +44,45 @@ export class PokemonMainInfoPanel extends React.Component<PokemonMainInfoPanelPr
                         value={this.props.species}
                         onChange={(_, value) => this.props.onSpeciesChanged(value)}
                         onSelect={value => this.props.onSpeciesChanged(value)}
-                        inputProps={{ className: "autocomplete"}}
+                        inputProps={{ className: "autocomplete species-autocomplete"}}
                     />
                 </div>
-                <div className="subpanel">
-                    <span className="label">Level</span>
-                    <input 
-                        className="spinbox"
-                        type="number" 
-                        min={0} 
-                        max={MAX_LEVEL} 
-                        step={1}
-                        value={this.props.level} 
-                        onInput={(e: React.FormEvent<HTMLInputElement>) => this.props.onLevelChanged(parseInt(e.currentTarget.value))} 
-                    />
-                </div>
-                <div className="subpanel">
-                    <Autocomplete
-                        items={natureArray}
-                        getItemValue={item => item.mName}
-                        renderItem={(nature, isHighlighted) =>
-                            <div 
-                                className="autocomplete-item" 
-                                style={{ background: isHighlighted ? 'lightgray' : 'white' }}
-                            >
-                                <span className="nature-autocomplete-text">{nature.mName}</span>
-                                <span>{nature.mIncreasedStat || nature.mDecreasedStat? "(" : ""}</span>
-                                <span style={{color: 'green'}}>{nature.mIncreasedStat ? "+" + nature.mIncreasedStat : ""}</span>
-                                <span>{nature.mIncreasedStat && nature.mDecreasedStat ? ", " : ""}</span>
-                                <span style={{color: 'red'}}>{nature.mDecreasedStat ? "-" + nature.mDecreasedStat : ""}</span>
-                                <span>{nature.mIncreasedStat || nature.mDecreasedStat ? ")" : ""}</span>
-                            </div>
-                        }
-                        value={this.props.natureString}
-                        onChange={(_, value) => this.props.onNatureChanged(value)}
-                        onSelect={value => this.props.onNatureChanged(value)}
-                        inputProps={{ className: "autocomplete"}}
-                    />
+                <div className="vert-subpanel level-nature-panel">
+                    <div className="subpanel">
+                        <span className="label">Level</span>
+                        <input 
+                            className="spinbox"
+                            type="number" 
+                            min={0} 
+                            max={MAX_LEVEL} 
+                            step={1}
+                            value={this.props.level} 
+                            onInput={(e: React.FormEvent<HTMLInputElement>) => this.props.onLevelChanged(parseInt(e.currentTarget.value))} 
+                        />
+                    </div>
+                    <div className="subpanel">
+                        <Autocomplete
+                            items={natureArray}
+                            getItemValue={item => item.mName}
+                            renderItem={(nature, isHighlighted) =>
+                                <div 
+                                    className="autocomplete-item" 
+                                    style={{ background: isHighlighted ? 'lightgray' : 'white' }}
+                                >
+                                    <span className="nature-autocomplete-text">{nature.mName}</span>
+                                    <span>{nature.mIncreasedStat || nature.mDecreasedStat? "(" : ""}</span>
+                                    <span style={{color: 'green'}}>{nature.mIncreasedStat ? "+" + nature.mIncreasedStat : ""}</span>
+                                    <span>{nature.mIncreasedStat && nature.mDecreasedStat ? ", " : ""}</span>
+                                    <span style={{color: 'red'}}>{nature.mDecreasedStat ? "-" + nature.mDecreasedStat : ""}</span>
+                                    <span>{nature.mIncreasedStat || nature.mDecreasedStat ? ")" : ""}</span>
+                                </div>
+                            }
+                            value={this.props.natureString}
+                            onChange={(_, value) => this.props.onNatureChanged(value)}
+                            onSelect={value => this.props.onNatureChanged(value)}
+                            inputProps={{ className: "autocomplete nature-autocomplete"}}
+                        />
+                    </div>
                 </div>
             </div>
         )

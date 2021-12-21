@@ -8,6 +8,7 @@ import { BaseStatPanel } from "./BaseStatPanel"
 import { EV_STEP, MAX_EV } from "../constants"
 import { Clamp } from "../utils"
 import { Nature } from "../nature"
+import { SliderPanelType } from "../enums/SliderPanelType"
 
 export interface StatPanelProps {
     statType: StatType,
@@ -17,8 +18,8 @@ export interface StatPanelProps {
 }
 
 interface StatPanelState {
-    ev: number,
-    finalStat: number,
+    evString: string,
+    finalStatString: string,
 }
 
 export class StatPanel extends React.Component<StatPanelProps, StatPanelState> {
@@ -28,39 +29,56 @@ export class StatPanel extends React.Component<StatPanelProps, StatPanelState> {
 
         const {statType, baseStat, level, nature} = this.props
         const finalStat = computeMinFinalStat(statType, baseStat, /*ev*/ 0, level, nature.getMultiplier(statType))
-        this.state = {ev: 0, finalStat: finalStat}
+        this.state = {evString: '0', finalStatString: finalStat.toString()}
+    }
+
+    getEV(): number {
+        const ev = parseInt(this.state.evString)
+        return isNaN(ev) ? 0 : ev
     }
 
     recomputeLimits () {
         const {statType, baseStat, level, nature} = this.props
-        const {ev} = this.state
+        const {finalStatString} = this.state
 
-        const natureMult = nature.getMultiplier(statType)
-
-        const minFinalStat = computeMinFinalStat(statType, baseStat, ev, level, natureMult)
-        const maxFinalStat = computeMaxFinalStat(statType, baseStat, ev, level, natureMult)
-        const cappedFinalStatValue = Clamp(this.state.finalStat, minFinalStat, maxFinalStat)
-        this.setState({finalStat: cappedFinalStatValue})
+        const finalStat = parseInt(finalStatString)
+        if (isNaN(finalStat)) {
+            const natureMult = nature.getMultiplier(statType)
+    
+            const minFinalStat = computeMinFinalStat(statType, baseStat, this.getEV(), level, natureMult)
+            const maxFinalStat = computeMaxFinalStat(statType, baseStat, this.getEV(), level, natureMult)
+            const cappedFinalStatValue = Clamp(finalStat, minFinalStat, maxFinalStat)
+            this.setState({finalStatString: cappedFinalStatValue.toString()})
+        }
+        
     }
 
     render() {
         const {statType, baseStat, level, nature} = this.props
-        const {ev, finalStat} = this.state
+        const {evString, finalStatString} = this.state
 
-        const evValueChanged = (evValue: number) => {
-            const sanitizedEVValue = Clamp(evValue, 0, MAX_EV)
-            this.setState({ev: sanitizedEVValue})
+        const evValueChanged = (evString: string) => {
+            const evValue = parseInt(evString)
+            if (isNaN(evValue))
+                this.setState({evString: evString})
+            else {
+                const sanitizedEVValue = Clamp(evValue, 0, MAX_EV)
+                this.setState({evString: sanitizedEVValue.toString()})
+            } 
             this.recomputeLimits()
         }
 
-        const finalStatValueChanged = (finalStatValue: number) => {
-            this.setState({finalStat: finalStatValue})
+        const finalStatValueChanged = (finalStatString: string) => {
+            this.setState({finalStatString: finalStatString})
+            this.recomputeLimits()
         }
 
+        const ev = this.getEV()
         const natureMult = nature.getMultiplier(statType)
         const minFinalStat = computeMinFinalStat(statType, baseStat, ev, level, natureMult)
         const maxFinalStat = computeMaxFinalStat(statType, baseStat, ev, level, natureMult)
-        const actualFinalStat = Clamp(finalStat, minFinalStat, maxFinalStat)
+        const finalStat = parseInt(finalStatString)
+        const actualFinalStat = isNaN(finalStat) ? minFinalStat : Clamp(finalStat, minFinalStat, maxFinalStat)
 
         const opt_iv_range = computeIVRange(statType, baseStat, ev, level, natureMult, actualFinalStat)
         return (
@@ -74,7 +92,7 @@ export class StatPanel extends React.Component<StatPanelProps, StatPanelState> {
                 </div>
                 <div className="inner-stat-panel">
                     <SliderPanel 
-                        className="ev" 
+                        panelType={SliderPanelType.EV} 
                         min={0} 
                         max={MAX_EV} 
                         step={EV_STEP} 
@@ -85,7 +103,7 @@ export class StatPanel extends React.Component<StatPanelProps, StatPanelState> {
 
                     <SliderPanel 
                         key={level + " " + baseStat + " " + natureMult}
-                        className="final-stat" 
+                        panelType={SliderPanelType.FinalStat} 
                         min={minFinalStat} 
                         max={maxFinalStat} 
                         step={1} 
