@@ -2,11 +2,12 @@ import React from 'react';
 import SwipeableViews from 'react-swipeable-views';
 import Tabs from '@mui/material/Tabs';
 import './App.css';
-import { AllBaseStatsPanel } from './components/AllBaseStatsPanel';
-import { PokemonMainInfoPanel } from './components/PokemonMainInfoPanel';
-import { MAX_LEVEL } from './constants';
-import { Clamp } from './utils';
+import { AllBaseStatsPanel } from './AllBaseStatsPanel';
+import { PokemonMainInfoPanel } from './PokemonMainInfoPanel';
+import { MAX_LEVEL } from './../constants';
+import { Clamp } from './../utils';
 import { Box, Tab, Typography } from '@mui/material';
+import { CalculatorType } from '../enums/CalculatorType';
 
 interface AppProps {
 
@@ -73,12 +74,14 @@ class App extends React.Component<AppProps, AppState> {
                             }}
                         >
                             <AllBaseStatsPanel
+                                panelType={CalculatorType.IVCalculator}
                                 hidden={this.state.currentTab !== 0}
                                 level={this.state.level}
                                 species={this.state.species}
                                 natureString={this.state.natureString}
                             />
                             <AllBaseStatsPanel
+                                panelType={CalculatorType.FinalStatCalculator}
                                 hidden={this.state.currentTab !== 1}
                                 level={this.state.level}
                                 species={this.state.species}

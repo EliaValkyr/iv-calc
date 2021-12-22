@@ -41,6 +41,7 @@ export class SliderPanel extends React.Component<SliderPanelProps, SliderPanelSt
                     cursor: 'ew-resize'
                 }}
                 onPointerDown={e => {
+                    e.preventDefault()
                     e.currentTarget.setPointerCapture(e.pointerId)
                     this.setState({isMousePressed: true, valueWhenPressed: this.props.currentValue, mouseOriginX: e.clientX - e.currentTarget.getBoundingClientRect().left})
                 }}
