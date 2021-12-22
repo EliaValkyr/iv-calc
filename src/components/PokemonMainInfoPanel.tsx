@@ -25,7 +25,7 @@ export class PokemonMainInfoPanel extends React.Component<PokemonMainInfoPanelPr
         const spritePath = pokemonData === undefined ? "unknown.png" : pokemonData.Sprite
 
         return (
-            <div className="pokemon-main-info-panel">
+            <div className="pokemon-main-info-panel" style={{zIndex:1}}>
                 <div className="vert-subpanel species-panel">
                     <img src={SPRITE_FOLDER + spritePath} />
                     <Autocomplete
