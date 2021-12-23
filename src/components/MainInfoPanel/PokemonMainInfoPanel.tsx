@@ -1,6 +1,6 @@
 import React from 'react';
 import "./PokemonMainInfoPanel.css"
-import { SPRITE_FOLDER } from '../../constants';
+import { SPECIES_SPRITE_FOLDER } from '../../constants';
 import allPokemonData from '../../PokemonData.json'
 import { TextField } from '@mui/material';
 import { SpeciesAutocomplete } from './SpeciesAutocomplete';
@@ -26,7 +26,7 @@ export class PokemonMainInfoPanel extends React.Component<PokemonMainInfoPanelPr
                 <img
                     alt="Sprite of the pokemon"
                     className="pokemon-sprite"
-                    src={SPRITE_FOLDER + spritePath}
+                    src={SPECIES_SPRITE_FOLDER + spritePath}
                 />
                 <div className="data-pickers-panel">
                     <SpeciesAutocomplete

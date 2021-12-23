@@ -1,10 +1,11 @@
 import React from 'react';
 import "./SpeciesAutocomplete.css"
 import Autocomplete from '@mui/material/Autocomplete';
-import { SPRITE_FOLDER } from '../../constants';
+import { SPECIES_SPRITE_FOLDER } from '../../constants';
 import allPokemonData from '../../PokemonData.json'
 import { TextField } from '@mui/material';
 import { Box } from '@mui/system';
+import { StatType } from '../../enums/StatType';
 
 export interface SpeciesAutocompleteProps {
     species: string,
@@ -12,6 +13,15 @@ export interface SpeciesAutocompleteProps {
 }
 
 export class SpeciesAutocomplete extends React.Component<SpeciesAutocompleteProps> {
+
+    renderTooltipBaseStat(statType: StatType, baseStatValue: number) {
+        return (
+            <div className='tooltip-base-stat-panel'>
+                <span className='tooltip-base-stat-text'>{statType}</span>
+                <span className='tooltip-base-stat-text'>{baseStatValue}</span>
+            </div>
+        )
+    }
 
     render() {
         const pokemonData = allPokemonData.find(x => x.Species.toLowerCase() === this.props.species.toLowerCase())
@@ -45,12 +55,23 @@ export class SpeciesAutocomplete extends React.Component<SpeciesAutocompleteProp
                         component="li"
                         {...props}
                     >
+
                         <img
                             alt="Sprite of the pokemon"
                             loading="lazy"
-                            src={SPRITE_FOLDER + pokemonData.Sprite}
+                            src={SPECIES_SPRITE_FOLDER + pokemonData.Sprite}
                         />
-                        {"#" + pokemonData.ID + " - " + pokemonData.Species}
+                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                            <span>{"#" + pokemonData.ID + " - " + pokemonData.Species}</span>
+                            <div style={{ display: 'flex', flexDirection: 'row' }}>
+                                {this.renderTooltipBaseStat(StatType.HP, pokemonData.HP)}
+                                {this.renderTooltipBaseStat(StatType.Attack, pokemonData.Attack)}
+                                {this.renderTooltipBaseStat(StatType.Defense, pokemonData.Defense)}
+                                {this.renderTooltipBaseStat(StatType.SpAttack, pokemonData.SpAttack)}
+                                {this.renderTooltipBaseStat(StatType.SpDefense, pokemonData.SpDefense)}
+                                {this.renderTooltipBaseStat(StatType.Speed, pokemonData.Speed)}
+                            </div>
+                        </div>
                     </Box>
                 )}
             />
