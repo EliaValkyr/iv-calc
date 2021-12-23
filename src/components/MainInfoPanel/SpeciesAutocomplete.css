@@ -1,6 +1,13 @@
+.MuiAutocomplete-listbox .species-autocomplete-item.MuiAutocomplete-option {
+    height: 68px;
+    gap: 10px;
+}
 
-.species-autocomplete {
-    flex: 1;
+.species-autocomplete-item > img {
+    image-rendering: pixelated;
+    object-fit: contain;
+    width: 32px;
+    height: 32px;
 }
 
 .tooltip-base-stat-panel {

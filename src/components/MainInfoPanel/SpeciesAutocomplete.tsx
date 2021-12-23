@@ -25,12 +25,17 @@ export class SpeciesAutocomplete extends React.Component<SpeciesAutocompleteProp
 
     render() {
         const pokemonData = allPokemonData.find(x => x.Species.toLowerCase() === this.props.species.toLowerCase())
+        const optionMatches = (o: typeof allPokemonData[number], text: string) =>
+            o.Species.toLowerCase().indexOf(text.toLowerCase()) !== -1
+        const maxOptions = 100
 
         return (
             <Autocomplete
                 options={allPokemonData}
-                className="autocomplete species-autocomplete"
+                classes={{ root: 'species-autocomplete', option: 'species-autocomplete-item' }}
                 getOptionLabel={(pokemonData) => pokemonData.Species}
+                filterOptions={(options, state) =>
+                    options.filter(o => optionMatches(o, state.inputValue)).slice(0, maxOptions)}
                 value={pokemonData}
                 onChange={(_, newPokemonData) => {
                     this.props.onSpeciesChanged(newPokemonData ? newPokemonData!.Species : "")
@@ -51,14 +56,13 @@ export class SpeciesAutocomplete extends React.Component<SpeciesAutocompleteProp
                 }
                 renderOption={(props, pokemonData) => (
                     <Box
-                        className="autocomplete-item"
                         component="li"
                         {...props}
                     >
 
                         <img
                             alt="Sprite of the pokemon"
-                            loading="lazy"
+                            decoding="async"
                             src={SPECIES_SPRITE_FOLDER + pokemonData.Sprite}
                         />
                         <div style={{ display: 'flex', flexDirection: 'column' }}>
