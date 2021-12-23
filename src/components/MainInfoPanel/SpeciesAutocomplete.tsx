@@ -27,12 +27,35 @@ export class SpeciesAutocomplete extends React.Component<SpeciesAutocompleteProp
 
     render() {
         const pokemonData = allPokemonData.find(x => x.Species.toLowerCase() === this.props.species.toLowerCase())
-        const optionScore = (o: PokemonData, text: string) =>
-            Math.min(o.Species.toLowerCase().indexOf(text.toLowerCase()), 1)
-        const filterOptions = (ox: PokemonData[], text: string) => !text ? [] :
-            ox.map(o => [ optionScore(o, text), o ] as [ number, typeof o ])
-                .filter(s => s[0] >= 0).sort((a, b) => a[0] - b[0]).map(s => s[1])
-        const maxOptions = 10
+        const minStringLengthToShowPokemonList = 2
+
+        const filterPokemonData = (pokemonDataArray: PokemonData[], filterText: string) => {
+            if (!filterText || filterText.length < minStringLengthToShowPokemonList)
+                return []
+
+            const findIgnoreCase = (needle: string, haystack: string) => Math.min(haystack.toLowerCase().indexOf(needle.toLowerCase()), 1)
+
+            // Score of a pokemon data, which will determine how the elements are filtered and sorted.
+            // Elements with a score of -1 will be discarded, the others will be sorted from smaller to greater.
+            // - Score of -1: The species nor the ID value does not contain the text.
+            // - Score of 0: The species starts with the text.
+            // - Score of 1: The species contains the text.
+            // - Score of 2: The ID value starts with the text.
+            // - Score of 3: The ID value contains the text.
+            const computeScoreForFiltering = (pokemonData: PokemonData): number => {
+                const fieldsByPriority = [pokemonData.Species, pokemonData.ID.toString()]
+                const scores = fieldsByPriority.map(field => findIgnoreCase(filterText, field))
+                const scoreIndex = scores.findIndex(score => score !== -1)
+                return scoreIndex === -1 ? -1 : scoreIndex * 2 + scores[scoreIndex]
+            }
+
+            return pokemonDataArray
+                .map(pokemonData => [computeScoreForFiltering(pokemonData), pokemonData] as [number, PokemonData])
+                .filter(pokemonDataWithScore => pokemonDataWithScore[0] >= 0)
+                .sort((lhs, rhs) => lhs[0] - rhs[0])
+                .map(pokemonDataWithScore => pokemonDataWithScore[1])
+        }
+        const maxOptions = 1000
 
         return (
             <Autocomplete
@@ -40,8 +63,9 @@ export class SpeciesAutocomplete extends React.Component<SpeciesAutocompleteProp
                 classes={{ root: 'species-autocomplete', option: 'species-autocomplete-item' }}
                 autoHighlight={true}
                 getOptionLabel={(pokemonData) => pokemonData.Species}
-                filterOptions={(options, state) => filterOptions(options, state.inputValue).slice(0, maxOptions)}
+                filterOptions={(options, _) => filterPokemonData(options, this.props.species).slice(0, maxOptions)}
                 value={pokemonData}
+                noOptionsText={this.props.species.length < minStringLengthToShowPokemonList ? "Keep typing..." : "No pokemon found"}
                 onChange={(_, newPokemonData) => {
                     this.props.onSpeciesChanged(newPokemonData ? newPokemonData!.Species : "")
                 }}
