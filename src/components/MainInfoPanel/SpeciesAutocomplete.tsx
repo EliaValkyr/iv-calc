@@ -7,6 +7,8 @@ import { TextField } from '@mui/material';
 import { Box } from '@mui/system';
 import { StatType } from '../../enums/StatType';
 
+type PokemonData = typeof allPokemonData[number]
+
 export interface SpeciesAutocompleteProps {
     species: string,
     onSpeciesChanged: ((species: string) => void),
@@ -25,17 +27,20 @@ export class SpeciesAutocomplete extends React.Component<SpeciesAutocompleteProp
 
     render() {
         const pokemonData = allPokemonData.find(x => x.Species.toLowerCase() === this.props.species.toLowerCase())
-        const optionMatches = (o: typeof allPokemonData[number], text: string) =>
-            o.Species.toLowerCase().indexOf(text.toLowerCase()) !== -1
-        const maxOptions = 100
+        const optionScore = (o: PokemonData, text: string) =>
+            Math.min(o.Species.toLowerCase().indexOf(text.toLowerCase()), 1)
+        const filterOptions = (ox: PokemonData[], text: string) => !text ? [] :
+            ox.map(o => [ optionScore(o, text), o ] as [ number, typeof o ])
+                .filter(s => s[0] >= 0).sort((a, b) => a[0] - b[0]).map(s => s[1])
+        const maxOptions = 10
 
         return (
             <Autocomplete
                 options={allPokemonData}
                 classes={{ root: 'species-autocomplete', option: 'species-autocomplete-item' }}
+                autoHighlight={true}
                 getOptionLabel={(pokemonData) => pokemonData.Species}
-                filterOptions={(options, state) =>
-                    options.filter(o => optionMatches(o, state.inputValue)).slice(0, maxOptions)}
+                filterOptions={(options, state) => filterOptions(options, state.inputValue).slice(0, maxOptions)}
                 value={pokemonData}
                 onChange={(_, newPokemonData) => {
                     this.props.onSpeciesChanged(newPokemonData ? newPokemonData!.Species : "")
