@@ -1,7 +1,7 @@
 import React from 'react';
 import "./PokemonMainInfoPanel.css"
-import { SPRITE_FOLDER } from '../constants';
-import allPokemonData from '../PokemonData.json'
+import { SPRITE_FOLDER } from '../../constants';
+import allPokemonData from '../../PokemonData.json'
 import { TextField } from '@mui/material';
 import { SpeciesAutocomplete } from './SpeciesAutocomplete';
 import { NatureAutocomplete } from './NatureAutocomplete';

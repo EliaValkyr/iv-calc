@@ -1,5 +1,5 @@
 import React from "react"
-import { getRGBColor, SliderPanelType } from "../enums/SliderPanelType"
+import { getRGBColor, SliderPanelType } from "../../enums/SliderPanelType"
 import "./FinalStatValuePanel.css"
 
 export interface FinalStatValueProps {

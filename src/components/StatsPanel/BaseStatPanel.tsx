@@ -1,6 +1,6 @@
 import React from "react"
 import "./BaseStatPanel.css"
-import { StatType } from "../enums/StatType"
+import { StatType } from "../../enums/StatType"
 
 export interface BaseStatPanelProps {
     statType: StatType,

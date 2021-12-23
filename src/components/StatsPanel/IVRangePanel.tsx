@@ -1,5 +1,5 @@
 import React from "react"
-import { getRGBColor, SliderPanelType } from "../enums/SliderPanelType"
+import { getRGBColor, SliderPanelType } from "../../enums/SliderPanelType"
 import "./IVRangePanel.css"
 
 export interface IVRangeProps {
@@ -19,7 +19,7 @@ export class IVRangePanel extends React.Component<IVRangeProps> {
                 className={"iv-range-panel"}
                 style={{ background: '#' + getRGBColor(SliderPanelType.IV) + "D0" }}
             >
-                <span className="label">IV Range</span>
+                <span className="label">Possible IVs</span>
                 <span className="label">{range_text}</span>
             </div>)
     }

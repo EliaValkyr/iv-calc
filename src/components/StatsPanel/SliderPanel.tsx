@@ -1,6 +1,6 @@
 import React from "react"
-import { getRGBColor, SliderPanelType } from "../enums/SliderPanelType"
-import { Clamp } from "../utils"
+import { getRGBColor, SliderPanelType } from "../../enums/SliderPanelType"
+import { Clamp } from "../../utils"
 import "./SliderPanel.css"
 
 export interface SliderPanelProps {

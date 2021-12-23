@@ -1,7 +1,7 @@
 import React from 'react';
 import "./NatureAutocomplete.css"
 import Autocomplete from '@mui/material/Autocomplete';
-import { Nature, natureArray } from '../nature';
+import { Nature, natureArray } from '../../nature';
 import { TextField } from '@mui/material';
 import { Box } from '@mui/system';
 

@@ -1,10 +1,10 @@
 import React from 'react';
 import "./AllBaseStatsPanel.css"
 import { StatPanel } from './StatPanel';
-import { StatType } from '../enums/StatType';
-import data from '../PokemonData.json'
-import { Nature, natureArray } from '../nature';
-import { CalculatorType } from '../enums/CalculatorType';
+import { StatType } from '../../enums/StatType';
+import data from '../../PokemonData.json'
+import { Nature, natureArray } from '../../nature';
+import { CalculatorType } from '../../enums/CalculatorType';
 
 export interface AllBaseStatsPanelProps {
     panelType: CalculatorType,

@@ -1,8 +1,8 @@
 import React from 'react';
 import "./SpeciesAutocomplete.css"
 import Autocomplete from '@mui/material/Autocomplete';
-import { SPRITE_FOLDER } from '../constants';
-import allPokemonData from '../PokemonData.json'
+import { SPRITE_FOLDER } from '../../constants';
+import allPokemonData from '../../PokemonData.json'
 import { TextField } from '@mui/material';
 import { Box } from '@mui/system';
 
