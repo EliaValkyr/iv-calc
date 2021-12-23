@@ -1,7 +1,7 @@
 
 .nature-autocomplete {
     text-align: center;
-    width: 270px;
+    flex: 1;
 }
 
 .nature-autocomplete-text {
