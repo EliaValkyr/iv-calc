@@ -6,7 +6,7 @@ import { AllBaseStatsPanel } from './AllBaseStatsPanel';
 import { PokemonMainInfoPanel } from './PokemonMainInfoPanel';
 import { MAX_LEVEL } from './../constants';
 import { Clamp } from './../utils';
-import { Box, Tab, Typography } from '@mui/material';
+import { Box, Tab } from '@mui/material';
 import { CalculatorType } from '../enums/CalculatorType';
 
 interface AppProps {
@@ -24,12 +24,12 @@ class App extends React.Component<AppProps, AppState> {
     constructor(props: AppProps) {
         super(props)
 
-        this.state = { species: "Blaziken", level: 70, natureString: "Adamant", currentTab: 0 }
+        this.state = { species: "Blaziken", level: 100, natureString: "Adamant", currentTab: 0 }
     }
 
     render() {
         const onLevelChanged = (levelValue: number) => {
-            const sanitizedlevelValue = Clamp(levelValue, 0, MAX_LEVEL)
+            const sanitizedlevelValue = Clamp(levelValue, 1, MAX_LEVEL)
             this.setState({ level: sanitizedlevelValue })
         }
 

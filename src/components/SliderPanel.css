@@ -37,7 +37,7 @@
 
 .central-panel > .central-label {
     text-align: center;
-    color: #606060;
+    color: rgba(var(--nordBlack), 1);
     font-weight: bold;
 }
 

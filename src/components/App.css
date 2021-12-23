@@ -4,7 +4,6 @@
     max-width: 800px;
     background-color: rgba(var(--nordWhite), 1);
     gap: 10px;
-    padding-top: 20px;
 }
 
 .tab-panel {

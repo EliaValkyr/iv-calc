@@ -27,10 +27,15 @@ export class SliderPanel extends React.Component<SliderPanelProps, SliderPanelSt
         this.state = {isMousePressed: false, valueWhenPressed: this.props.currentValue, mouseOriginX: 0}
     }
 
+    clickedExtremesButton(e: React.PointerEvent<HTMLDivElement>, value: number) {
+        e.stopPropagation()
+        this.props.onValueChanged(value.toString())
+    }
+
     render() {
         const {min, max, step, currentValue, labelText, onValueChanged} = this.props
 
-        const valueFrac = min == max ? 0.5 : Clamp((currentValue - min) / (max - min), 0, 1)
+        const valueFrac = min === max ? 0.5 : Clamp((currentValue - min) / (max - min), 0, 1)
 
         const rgbColor = getRGBColor(this.props.panelType);
         return (
@@ -39,6 +44,11 @@ export class SliderPanel extends React.Component<SliderPanelProps, SliderPanelSt
                 style={{ 
                     background: 'linear-gradient(90deg, #' + rgbColor + 'D0 ' + (100 * valueFrac) + '%, #' + rgbColor + '60 ' + (100 * valueFrac) + '%)',
                     cursor: 'ew-resize'
+                }}
+                onWheel={e => {
+                    const valueDelta = - step * Math.sign(e.deltaY)
+                    const newValue = currentValue + valueDelta
+                    onValueChanged(newValue.toString())
                 }}
                 onPointerDown={e => {
                     e.preventDefault()
@@ -65,7 +75,7 @@ export class SliderPanel extends React.Component<SliderPanelProps, SliderPanelSt
             >
                 <div
                     className="extremes-panel"
-                    onPointerDown={e => onValueChanged(min.toString())}
+                    onPointerDown={e => this.clickedExtremesButton(e, min)}
                 >
                     <span className="extremes-label">{min}</span>
                 </div>
@@ -78,14 +88,14 @@ export class SliderPanel extends React.Component<SliderPanelProps, SliderPanelSt
                         min={min} 
                         max={max} 
                         step={step}
-                        value={currentValue} 
+                        value={currentValue}
                         onInput={(e: React.FormEvent<HTMLInputElement>) => onValueChanged(e.currentTarget.value)} 
                     />
                 </div>
                 <div className="stretch"/>
                 <div
                     className="extremes-panel"
-                    onPointerDown={e => onValueChanged(max.toString())}
+                    onPointerDown={e => this.clickedExtremesButton(e, max)}
                 >
                     <span className="extremes-label">{max}</span>
                 </div>
