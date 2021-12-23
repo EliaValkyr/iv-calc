@@ -22,11 +22,11 @@
 }
 
 .increased-value-color {
-    color: rgba(var(--nordGreen), 1);
+    color: rgba(var(--positiveNatureColor), 1);
 }
 
 .decreased-value-color {
-    color: rgba(var(--nordRed), 1);
+    color: rgba(var(--negativeNatureColor), 1);
 }
 
 @media screen and (max-width: 500px) {

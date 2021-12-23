@@ -7,6 +7,9 @@
     --nordGreen: 163, 190, 140;
     --nordBlue: 94, 129, 172;
     --nordPurple: 180, 142, 173;
+
+    --positiveNatureColor: 76, 159, 112;
+    --negativeNatureColor: 186, 50, 79;
 }
 
 body {
