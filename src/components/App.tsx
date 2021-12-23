@@ -1,5 +1,4 @@
 import React from 'react';
-import SwipeableViews from 'react-swipeable-views';
 import Tabs from '@mui/material/Tabs';
 import './App.css';
 import { AllBaseStatsPanel } from './StatsPanel/AllBaseStatsPanel';

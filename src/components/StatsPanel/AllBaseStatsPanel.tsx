@@ -22,10 +22,10 @@ export class AllBaseStatsPanel extends React.Component<AllBaseStatsPanelProps, A
     render() {
         const { panelType, hidden, level, species, natureString } = this.props
 
-        const pokemonData = data.find(x => x.Species.toLowerCase() == this.props.species.toLowerCase())
+        const pokemonData = data.find(x => x.Species.toLowerCase() === species.toLowerCase())
 
-        const optNature = natureArray.find(x => x.mName == natureString)
-        const nature: Nature = optNature == undefined ? new Nature("Dummy") : optNature!
+        const optNature = natureArray.find(x => x.mName === natureString)
+        const nature: Nature = optNature === undefined ? new Nature("Dummy") : optNature!
 
         return (
             <div

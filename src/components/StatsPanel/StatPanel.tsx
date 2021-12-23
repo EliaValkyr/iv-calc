@@ -73,9 +73,9 @@ export class StatPanel extends React.Component<StatPanelProps, StatPanelState> {
     }
 
     renderSecondSlider(ivCalcMinFinalStat: number, ivCalcMaxFinalStat: number, ivCalcFinalStat: number) {
-        const { statType, baseStat, level, nature } = this.props
+        const { panelType, baseStat, level, nature } = this.props
 
-        if (this.props.panelType === CalculatorType.FinalStatCalculator) {
+        if (panelType === CalculatorType.FinalStatCalculator) {
 
             const ivValueChanged = (ivString: string) => {
                 const ivValue = parseInt(ivString)
@@ -123,7 +123,7 @@ export class StatPanel extends React.Component<StatPanelProps, StatPanelState> {
 
     render() {
         const { statType, baseStat, level, nature } = this.props
-        const { evString, finalStatString } = this.state
+        const { finalStatString } = this.state
 
         const evValueChanged = (evString: string) => {
             const evValue = parseInt(evString)
