@@ -66,28 +66,20 @@ class App extends React.Component<AppProps, AppState> {
                             </Tabs>
                         </Box>
 
-                        <SwipeableViews
-                            axis={'x'}
-                            index={this.state.currentTab}
-                            onChangeIndex={(newTab: number) => {
-                                this.setState({ currentTab: newTab })
-                            }}
-                        >
-                            <AllBaseStatsPanel
-                                panelType={CalculatorType.IVCalculator}
-                                hidden={this.state.currentTab !== 0}
-                                level={this.state.level}
-                                species={this.state.species}
-                                natureString={this.state.natureString}
-                            />
-                            <AllBaseStatsPanel
-                                panelType={CalculatorType.FinalStatCalculator}
-                                hidden={this.state.currentTab !== 1}
-                                level={this.state.level}
-                                species={this.state.species}
-                                natureString={this.state.natureString}
-                            />
-                        </SwipeableViews>
+                        <AllBaseStatsPanel
+                            panelType={CalculatorType.IVCalculator}
+                            hidden={this.state.currentTab !== 0}
+                            level={this.state.level}
+                            species={this.state.species}
+                            natureString={this.state.natureString}
+                        />
+                        <AllBaseStatsPanel
+                            panelType={CalculatorType.FinalStatCalculator}
+                            hidden={this.state.currentTab !== 1}
+                            level={this.state.level}
+                            species={this.state.species}
+                            natureString={this.state.natureString}
+                        />
 
                     </Box>
                 </div>

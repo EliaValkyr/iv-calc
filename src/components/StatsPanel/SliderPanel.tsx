@@ -20,6 +20,8 @@ interface SliderPanelState {
 }
 
 export class SliderPanel extends React.Component<SliderPanelProps, SliderPanelState> {
+    rootRef = React.createRef<HTMLDivElement>()
+    wheelListener: any
     
     constructor(props: SliderPanelProps) {
         super(props)
@@ -27,7 +29,23 @@ export class SliderPanel extends React.Component<SliderPanelProps, SliderPanelSt
         this.state = {isMousePressed: false, valueWhenPressed: this.props.currentValue, mouseOriginX: 0}
     }
 
+    componentDidMount() {
+        this.wheelListener = (e: WheelEvent) => {
+            const {step, currentValue, onValueChanged} = this.props
+            e.preventDefault()
+            const valueDelta = - step * Math.sign(e.deltaY)
+            const newValue = currentValue + valueDelta
+            onValueChanged(newValue.toString())
+        }
+        this.rootRef.current!.addEventListener('wheel', this.wheelListener)
+    }
+
+    componentWillUnmount() {
+        this.rootRef.current!.removeEventListener('wheel', this.wheelListener)
+    }
+
     clickedExtremesButton(e: React.PointerEvent<HTMLDivElement>, value: number) {
+        e.preventDefault()
         e.stopPropagation()
         this.props.onValueChanged(value.toString())
     }
@@ -39,16 +57,12 @@ export class SliderPanel extends React.Component<SliderPanelProps, SliderPanelSt
 
         const rgbColor = getRGBColor(this.props.panelType);
         return (
-            <div 
+            <div
+                ref={this.rootRef}
                 className={"slider-panel"}
                 style={{ 
                     background: 'linear-gradient(90deg, #' + rgbColor + 'D0 ' + (100 * valueFrac) + '%, #' + rgbColor + '60 ' + (100 * valueFrac) + '%)',
                     cursor: 'ew-resize'
-                }}
-                onWheel={e => {
-                    const valueDelta = - step * Math.sign(e.deltaY)
-                    const newValue = currentValue + valueDelta
-                    onValueChanged(newValue.toString())
                 }}
                 onPointerDown={e => {
                     e.preventDefault()
@@ -67,10 +81,11 @@ export class SliderPanel extends React.Component<SliderPanelProps, SliderPanelSt
                     }
                 }}
                 onPointerUp={e => {
-                    this.setState({isMousePressed: false, valueWhenPressed: this.props.currentValue, mouseOriginX: 0})
+                    this.setState({isMousePressed: false})
                 }}
                 onPointerCancel={e => {
-                    this.setState({isMousePressed: false, valueWhenPressed: this.props.currentValue, mouseOriginX: 0})
+                    this.setState({isMousePressed: false})
+                    onValueChanged(this.state.valueWhenPressed.toString())
                 }}
             >
                 <div
@@ -89,7 +104,8 @@ export class SliderPanel extends React.Component<SliderPanelProps, SliderPanelSt
                         max={max} 
                         step={step}
                         value={currentValue}
-                        onInput={(e: React.FormEvent<HTMLInputElement>) => onValueChanged(e.currentTarget.value)} 
+                        onInput={(e) => onValueChanged(e.currentTarget.value)} 
+                        onPointerDown={(e) => e.stopPropagation()}
                     />
                 </div>
                 <div className="stretch"/>

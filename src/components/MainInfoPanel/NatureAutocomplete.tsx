@@ -46,7 +46,7 @@ export class NatureAutocomplete extends React.Component<NatureAutocompleteProps>
                         <span className="nature-autocomplete-text">{nature.mName}</span>
                         <span>{nature.mIncreasedStat || nature.mDecreasedStat ? "(" : ""}</span>
                         <span style={{ color: 'green' }}>{nature.mIncreasedStat ? "+" + nature.mIncreasedStat : ""}</span>
-                        <span>{nature.mIncreasedStat && nature.mDecreasedStat ? ", " : ""}</span>
+                        <span>{nature.mIncreasedStat && nature.mDecreasedStat ? ", " : ""}</span>{" "}
                         <span style={{ color: 'red' }}>{nature.mDecreasedStat ? "-" + nature.mDecreasedStat : ""}</span>
                         <span>{nature.mIncreasedStat || nature.mDecreasedStat ? ")" : ""}</span>
                     </Box>
