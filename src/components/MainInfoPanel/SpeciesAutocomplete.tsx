@@ -29,8 +29,12 @@ export class SpeciesAutocomplete extends React.Component<SpeciesAutocompleteProp
         const pokemonData = allPokemonData.find(x => x.Species.toLowerCase() === this.props.species.toLowerCase())
         const minStringLengthToShowPokemonList = 2
 
-        const filterPokemonData = (pokemonDataArray: PokemonData[], filterText: string) => {
-            if (!filterText || filterText.length < minStringLengthToShowPokemonList)
+        const filterPokemonData = (pokemonDataArray: PokemonData[], filterText: string): PokemonData[] => {
+            // I love my beautiful gf so this easter egg is for her <3
+            if (filterText === "a")
+                return [pokemonDataArray.find(x => x.Species.toLowerCase() === "surskit")!]
+
+            if (filterText.length < minStringLengthToShowPokemonList)
                 return []
 
             const findIgnoreCase = (needle: string, haystack: string) => Math.min(haystack.toLowerCase().indexOf(needle.toLowerCase()), 1)
@@ -55,7 +59,6 @@ export class SpeciesAutocomplete extends React.Component<SpeciesAutocompleteProp
                 .sort((lhs, rhs) => lhs[0] - rhs[0])
                 .map(pokemonDataWithScore => pokemonDataWithScore[1])
         }
-        const maxOptions = 1000
 
         return (
             <Autocomplete
@@ -63,7 +66,7 @@ export class SpeciesAutocomplete extends React.Component<SpeciesAutocompleteProp
                 classes={{ root: 'species-autocomplete', option: 'species-autocomplete-item' }}
                 autoHighlight={true}
                 getOptionLabel={(pokemonData) => pokemonData.Species}
-                filterOptions={(options, _) => filterPokemonData(options, this.props.species).slice(0, maxOptions)}
+                filterOptions={(options, _) => filterPokemonData(options, this.props.species)}
                 value={pokemonData}
                 noOptionsText={this.props.species.length < minStringLengthToShowPokemonList ? "Keep typing..." : "No pokemon found"}
                 onChange={(_, newPokemonData) => {
