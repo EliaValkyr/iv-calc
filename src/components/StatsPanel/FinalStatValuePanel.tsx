@@ -11,11 +11,11 @@ export class FinalStatValuePanel extends React.Component<FinalStatValueProps> {
         const {finalStat} = this.props
         return (
             <div 
-                className={"final-stat-value-panel"}
+                className={"stat-result-panel final-stat-value-panel"}
                 style={{ background: '#' + getRGBColor(SliderPanelType.FinalStat) + "D0" }}
             >
                 <span className="label">Final Stat</span>
-                <span className="label">{finalStat}</span>
+                <span className="value">{finalStat}</span>
             </div>)
     }
 }

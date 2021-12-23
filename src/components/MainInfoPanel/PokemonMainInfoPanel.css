@@ -27,3 +27,34 @@
     object-fit: contain;
     image-rendering: pixelated;
 }
+
+@media screen and (max-width: 600px) {
+    .pokemon-sprite {
+        width: 80px;
+        height: 80px;
+    }
+
+    .data-pickers-panel {
+        gap: 15px;
+    }
+    .level-nature-panel {
+        gap: 15px;
+    }
+
+    .pokemon-main-info-panel {
+        padding: 15px 20px;
+        gap: 20px;
+    }
+}
+
+@media screen and (max-width: 420px) {
+    .pokemon-main-info-panel {
+        padding: 15px 15px;
+    }
+    .pokemon-sprite {
+        width: 64px;
+    }
+    .MuiAutocomplete-listbox .nature-autocomplete-item.MuiAutocomplete-option {
+        padding: 6px 10px;
+    }
+}

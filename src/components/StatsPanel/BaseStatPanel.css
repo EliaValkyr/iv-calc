@@ -28,3 +28,9 @@
 .decreased-value-color {
     color: rgba(var(--nordRed), 1);
 }
+
+@media screen and (max-width: 500px) {
+    .base-stat-panel > .base-stat-text-label {
+        font-size: 30px;
+    }    
+}

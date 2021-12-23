@@ -16,11 +16,11 @@ export class IVRangePanel extends React.Component<IVRangeProps> {
             : "Error"
         return (
             <div 
-                className={"iv-range-panel"}
+                className={"stat-result-panel iv-range-panel"}
                 style={{ background: '#' + getRGBColor(SliderPanelType.IV) + "D0" }}
             >
                 <span className="label">Possible IVs</span>
-                <span className="label">{range_text}</span>
+                <span className="value">{range_text}</span>
             </div>)
     }
 }

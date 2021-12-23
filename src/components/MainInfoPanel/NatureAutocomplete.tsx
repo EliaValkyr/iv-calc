@@ -17,7 +17,7 @@ export class NatureAutocomplete extends React.Component<NatureAutocompleteProps>
 
         return (
             <Autocomplete
-                className="autocomplete nature-autocomplete"
+                classes={{ root: 'nature-autocomplete', option: 'nature-autocomplete-item' }}
                 options={natureArray}
                 getOptionLabel={(nature) => nature.mName}
                 value={natureData}
@@ -40,9 +40,7 @@ export class NatureAutocomplete extends React.Component<NatureAutocompleteProps>
                 }
                 renderOption={(props, nature) => (
                     <Box
-                        className="autocomplete-item"
                         component="li"
-                        sx={{ '& > img': { mr: 2, flexShrink: 0 }, height: '30px' }}
                         {...props}
                     >
                         <span className="nature-autocomplete-text">{nature.mName}</span>

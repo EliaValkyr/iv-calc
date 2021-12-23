@@ -21,3 +21,22 @@
 .inner-stat-panel > .final-stat {
     background-color: rgba(var(--nordGreen), 0.5);
 }
+
+@media screen and (max-width: 500px) {
+    .inner-stat-panel {
+        order: 2;
+    }
+    .stat-result-panel {
+        order: 1;
+    }
+    .stat-panel > .stat-result-panel, .stat-panel > .base-stat-panel {
+        flex-direction: row;
+        flex: 1;
+    }
+    .stat-panel > .stat-result-panel > .label, .stat-panel > .base-stat-panel > .label {
+        white-space: nowrap;
+    }
+    .stat-panel {
+        flex-wrap: wrap;
+    }
+}
