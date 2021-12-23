@@ -153,13 +153,11 @@ export class StatPanel extends React.Component<StatPanelProps, StatPanelState> {
 
         return (
             <div className="stat-panel">
-                <div>
-                    <BaseStatPanel
-                        statType={statType}
-                        baseStat={baseStat}
-                        natureMult={natureMult}
-                    />
-                </div>
+                <BaseStatPanel
+                    statType={statType}
+                    baseStat={baseStat}
+                    natureMult={natureMult}
+                />
                 <div className="inner-stat-panel">
                     <SliderPanel
                         panelType={SliderPanelType.EV}
@@ -173,9 +171,7 @@ export class StatPanel extends React.Component<StatPanelProps, StatPanelState> {
 
                     {this.renderSecondSlider(ivCalcMinFinalStat, ivCalcMaxFinalStat, ivCalcActualFinalStat)}
                 </div>
-                <div>
-                    {this.renderResultPanel(statCalcFinalStat, ivCalcOptIVRange)}
-                </div>
+                {this.renderResultPanel(statCalcFinalStat, ivCalcOptIVRange)}
             </div>
         )
     }
