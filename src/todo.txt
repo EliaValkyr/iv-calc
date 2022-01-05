@@ -1,9 +1,13 @@
 TODO
 
-- search pokemon by id
-- add base stats to species list
-- upload to server
-- add max iv warning
+- add max ev warning
 - add extra detail to iv panel?
-- add tabs-> another thing to compute final stats based on ev/iv
 - add speed tier list
+- add links to serebii/smogon
+- add pokemon types when selected
+- centered in pc view
+- dark theme
+
+
+Other possible features:
+- National pokedex with base stats, abilities, etc

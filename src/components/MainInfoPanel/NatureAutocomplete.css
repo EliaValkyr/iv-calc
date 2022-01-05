@@ -5,5 +5,12 @@
 }
 
 .nature-autocomplete-text {
-    width: 4.5em;
+    width: 4.3em;
+}
+
+
+@media screen and (max-width: 370px) {
+    .nature-autocomplete-detail-text {
+        font-size: 12px;
+    }
 }
