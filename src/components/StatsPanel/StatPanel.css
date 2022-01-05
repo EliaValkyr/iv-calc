@@ -7,6 +7,12 @@
     border-bottom: none;
 }
 
+@media screen and (max-width: 500px) {
+    .stat-panel {
+        border-bottom: 2px solid rgba(var(--nordBlack), 1);
+    }
+}
+
 .inner-stat-panel {
     display: flex;
     flex-direction: column;

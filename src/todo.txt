@@ -1,7 +1,6 @@
 TODO
 
 - add max ev warning
-- add extra detail to iv panel?
 - add speed tier list
 - add links to serebii/smogon
 - add pokemon types when selected
@@ -10,9 +9,7 @@ TODO
 - add type sprites
 - change natures panel
 - buttons min/max: change onDown -> onClick
-- Fix level text
 - save state when refreshing
-- add buttons with +/- step. Remove text input in sliders
 
 
 Other possible features:
