@@ -22,16 +22,16 @@ interface SliderPanelState {
 export class SliderPanel extends React.Component<SliderPanelProps, SliderPanelState> {
     rootRef = React.createRef<HTMLDivElement>()
     wheelListener: any
-    
+
     constructor(props: SliderPanelProps) {
         super(props)
 
-        this.state = {isMousePressed: false, valueWhenPressed: this.props.currentValue, mouseOriginX: 0}
+        this.state = { isMousePressed: false, valueWhenPressed: this.props.currentValue, mouseOriginX: 0 }
     }
 
     componentDidMount() {
         this.wheelListener = (e: WheelEvent) => {
-            const {step, currentValue, onValueChanged} = this.props
+            const { step, currentValue, onValueChanged } = this.props
             e.preventDefault()
             const valueDelta = - step * Math.sign(e.deltaY)
             const newValue = currentValue + valueDelta
@@ -50,8 +50,14 @@ export class SliderPanel extends React.Component<SliderPanelProps, SliderPanelSt
         this.props.onValueChanged(value.toString())
     }
 
+    clickedStepButton(e: React.PointerEvent<HTMLDivElement>, value: number) {
+        e.preventDefault()
+        e.stopPropagation()
+        this.props.onValueChanged(Clamp(value, this.props.min, this.props.max).toString())
+    }
+
     render() {
-        const {min, max, step, currentValue, labelText, onValueChanged} = this.props
+        const { min, max, step, currentValue, labelText, onValueChanged } = this.props
 
         const valueFrac = min === max ? 0.5 : Clamp((currentValue - min) / (max - min), 0, 1)
 
@@ -60,14 +66,14 @@ export class SliderPanel extends React.Component<SliderPanelProps, SliderPanelSt
             <div
                 ref={this.rootRef}
                 className={"slider-panel"}
-                style={{ 
+                style={{
                     background: 'linear-gradient(90deg, #' + rgbColor + 'D0 ' + (100 * valueFrac) + '%, #' + rgbColor + '60 ' + (100 * valueFrac) + '%)',
                     cursor: 'ew-resize'
                 }}
                 onPointerDown={e => {
                     e.preventDefault()
                     e.currentTarget.setPointerCapture(e.pointerId)
-                    this.setState({isMousePressed: true, valueWhenPressed: this.props.currentValue, mouseOriginX: e.clientX - e.currentTarget.getBoundingClientRect().left})
+                    this.setState({ isMousePressed: true, valueWhenPressed: this.props.currentValue, mouseOriginX: e.clientX - e.currentTarget.getBoundingClientRect().left })
                 }}
                 onPointerMove={e => {
                     if (this.state.isMousePressed) {
@@ -75,16 +81,16 @@ export class SliderPanel extends React.Component<SliderPanelProps, SliderPanelSt
                         const mouseCurrentX = e.clientX - rect.left
                         const totalWidth = rect.width
                         const relativeMovement = (mouseCurrentX - this.state.mouseOriginX) / totalWidth
-                        const valueDelta = Math.round((max - min) * 1.5 * relativeMovement / this.props.step) * step
+                        const valueDelta = Math.round((max - min) * relativeMovement / this.props.step) * step
                         const newValue = Clamp(this.state.valueWhenPressed + valueDelta, min, max)
                         onValueChanged(newValue.toString())
                     }
                 }}
                 onPointerUp={e => {
-                    this.setState({isMousePressed: false})
+                    this.setState({ isMousePressed: false })
                 }}
                 onPointerCancel={e => {
-                    this.setState({isMousePressed: false})
+                    this.setState({ isMousePressed: false })
                     onValueChanged(this.state.valueWhenPressed.toString())
                 }}
             >
@@ -94,21 +100,23 @@ export class SliderPanel extends React.Component<SliderPanelProps, SliderPanelSt
                 >
                     <span className="extremes-label">{min}</span>
                 </div>
-                <div className="stretch"/>
+                <div className="stretch" />
                 <div className="central-panel">
-                    <span className="central-label">{labelText + ":"}</span>
-                    <input 
-                        className="spinbox"
-                        type="number" 
-                        min={min} 
-                        max={max} 
-                        step={step}
-                        value={currentValue}
-                        onInput={(e) => onValueChanged(e.currentTarget.value)} 
-                        onPointerDown={(e) => e.stopPropagation()}
-                    />
+                    <div
+                        className="step-panel"
+                        onPointerDown={e => this.clickedStepButton(e, currentValue - step)}
+                    >
+                        <span className="step-label">{'-' + step}</span>
+                    </div>
+                    <span className="central-label">{labelText + ": " + currentValue}</span>
+                    <div
+                        className="step-panel"
+                        onPointerDown={e => this.clickedStepButton(e, currentValue + step)}
+                    >
+                        <span className="step-label">{'+' + step}</span>
+                    </div>
                 </div>
-                <div className="stretch"/>
+                <div className="stretch" />
                 <div
                     className="extremes-panel"
                     onPointerDown={e => this.clickedExtremesButton(e, max)}
