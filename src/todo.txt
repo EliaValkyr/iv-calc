@@ -7,7 +7,14 @@ TODO
 - add pokemon types when selected
 - centered in pc view
 - dark theme
+- add type sprites
+- change natures panel
+- buttons min/max: change onDown -> onClick
+- Fix level text
+- save state when refreshing
+- add buttons with +/- step. Remove text input in sliders
 
 
 Other possible features:
 - National pokedex with base stats, abilities, etc
+- add speed tier list

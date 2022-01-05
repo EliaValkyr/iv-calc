@@ -14,7 +14,7 @@ interface AppProps {
 
 interface AppState {
     species: string,
-    level: number,
+    levelString: string,
     natureString: string,
     currentTab: number,
 }
@@ -23,13 +23,18 @@ class App extends React.Component<AppProps, AppState> {
     constructor(props: AppProps) {
         super(props)
 
-        this.state = { species: "Blaziken", level: 100, natureString: "Adamant", currentTab: 0 }
+        this.state = { species: "Blaziken", levelString: '100', natureString: "Adamant", currentTab: 0 }
     }
 
     render() {
-        const onLevelChanged = (levelValue: number) => {
-            const sanitizedlevelValue = Clamp(levelValue, 1, MAX_LEVEL)
-            this.setState({ level: sanitizedlevelValue })
+        const onLevelChanged = (levelString: string) => {
+            const levelValue = parseInt(levelString)
+            if (isNaN(levelValue)) {
+                this.setState({ levelString: levelString })
+            } else {
+                const sanitizedlevelValue = Clamp(levelValue, 0, MAX_LEVEL)
+                this.setState({ levelString: sanitizedlevelValue.toString() })
+            }
         }
 
         const onSpeciesChanged = (species: string) => {
@@ -40,11 +45,14 @@ class App extends React.Component<AppProps, AppState> {
             this.setState({ natureString: nature })
         }
 
+        const levelParsedValue = parseInt(this.state.levelString)
+        const levelValue = isNaN(levelParsedValue) ? 1 : levelParsedValue
+
         return (
             <div className="container">
                 <div className="app">
                     <PokemonMainInfoPanel
-                        level={this.state.level}
+                        levelString={this.state.levelString}
                         species={this.state.species}
                         natureString={this.state.natureString}
                         onLevelChanged={onLevelChanged}
@@ -68,14 +76,14 @@ class App extends React.Component<AppProps, AppState> {
                         <AllBaseStatsPanel
                             panelType={CalculatorType.IVCalculator}
                             hidden={this.state.currentTab !== 0}
-                            level={this.state.level}
+                            level={levelValue}
                             species={this.state.species}
                             natureString={this.state.natureString}
                         />
                         <AllBaseStatsPanel
                             panelType={CalculatorType.FinalStatCalculator}
                             hidden={this.state.currentTab !== 1}
-                            level={this.state.level}
+                            level={levelValue}
                             species={this.state.species}
                             natureString={this.state.natureString}
                         />

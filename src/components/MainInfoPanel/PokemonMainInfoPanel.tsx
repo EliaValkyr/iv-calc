@@ -7,10 +7,10 @@ import { SpeciesAutocomplete } from './SpeciesAutocomplete';
 import { NatureAutocomplete } from './NatureAutocomplete';
 
 export interface PokemonMainInfoPanelProps {
-    level: number,
+    levelString: string,
     species: string,
     natureString: string,
-    onLevelChanged: ((value: number) => void),
+    onLevelChanged: ((level: string) => void),
     onSpeciesChanged: ((species: string) => void),
     onNatureChanged: ((nature: string) => void),
 }
@@ -42,10 +42,9 @@ export class PokemonMainInfoPanel extends React.Component<PokemonMainInfoPanelPr
                             InputLabelProps={{
                                 shrink: true,
                             }}
-                            value={this.props.level}
+                            value={this.props.levelString}
                             onChange={(e) => {
-                                const newLevel = parseInt(e.currentTarget.value)
-                                this.props.onLevelChanged(isNaN(newLevel) ? 1 : newLevel)
+                                this.props.onLevelChanged(e.currentTarget.value)
                             }}
                         />
                         <NatureAutocomplete
