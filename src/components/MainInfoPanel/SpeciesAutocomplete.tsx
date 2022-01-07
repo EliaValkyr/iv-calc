@@ -26,7 +26,8 @@ export class SpeciesAutocomplete extends React.Component<SpeciesAutocompleteProp
     }
 
     render() {
-        const pokemonData = allPokemonData.find(x => x.Species.toLowerCase() === this.props.species.toLowerCase())
+        const optPokemonData = allPokemonData.find(x => x.Species.toLowerCase() === this.props.species.toLowerCase())
+        const pokemonData = optPokemonData === undefined ? allPokemonData[0] : optPokemonData
         const minStringLengthToShowPokemonList = 2
 
         const filterPokemonData = (pokemonDataArray: PokemonData[], filterText: string): PokemonData[] => {

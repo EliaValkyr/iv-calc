@@ -44,13 +44,13 @@ export class SliderPanel extends React.Component<SliderPanelProps, SliderPanelSt
         this.rootRef.current!.removeEventListener('wheel', this.wheelListener)
     }
 
-    clickedExtremesButton(e: React.PointerEvent<HTMLDivElement>, value: number) {
+    clickedExtremesButton(e: React.MouseEvent<HTMLDivElement>, value: number) {
         e.preventDefault()
         e.stopPropagation()
         this.props.onValueChanged(value.toString())
     }
 
-    clickedStepButton(e: React.PointerEvent<HTMLDivElement>, value: number) {
+    clickedStepButton(e: React.MouseEvent<HTMLDivElement>, value: number) {
         e.preventDefault()
         e.stopPropagation()
         this.props.onValueChanged(Clamp(value, this.props.min, this.props.max).toString())
@@ -96,7 +96,8 @@ export class SliderPanel extends React.Component<SliderPanelProps, SliderPanelSt
             >
                 <div
                     className="extremes-panel"
-                    onPointerDown={e => this.clickedExtremesButton(e, min)}
+                    onPointerDown={e => {e.preventDefault(); e.stopPropagation()}}
+                    onClick={e => this.clickedExtremesButton(e, min)}
                 >
                     <span className="extremes-label">{min}</span>
                 </div>
@@ -104,14 +105,16 @@ export class SliderPanel extends React.Component<SliderPanelProps, SliderPanelSt
                 <div className="central-panel">
                     <div
                         className="step-panel"
-                        onPointerDown={e => this.clickedStepButton(e, currentValue - step)}
+                        onPointerDown={e => {e.preventDefault(); e.stopPropagation()}}
+                        onClick={e => this.clickedStepButton(e, currentValue - step)}
                     >
                         <span className="step-label">{'-' + step}</span>
                     </div>
                     <span className="central-label">{labelText + ": " + currentValue}</span>
                     <div
                         className="step-panel"
-                        onPointerDown={e => this.clickedStepButton(e, currentValue + step)}
+                        onPointerDown={e => {e.preventDefault(); e.stopPropagation()}}
+                        onClick={e => this.clickedStepButton(e, currentValue + step)}
                     >
                         <span className="step-label">{'+' + step}</span>
                     </div>
@@ -119,7 +122,8 @@ export class SliderPanel extends React.Component<SliderPanelProps, SliderPanelSt
                 <div className="stretch" />
                 <div
                     className="extremes-panel"
-                    onPointerDown={e => this.clickedExtremesButton(e, max)}
+                    onPointerDown={e => {e.preventDefault(); e.stopPropagation()}}
+                    onClick={e => this.clickedExtremesButton(e, max)}
                 >
                     <span className="extremes-label">{max}</span>
                 </div>
