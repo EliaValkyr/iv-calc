@@ -2,6 +2,9 @@ import React from "react"
 import { getRGBColor, SliderPanelType } from "../../enums/SliderPanelType"
 import { Clamp } from "../../utils"
 import "./SliderPanel.css"
+import { mdiChevronLeft, mdiChevronRight, mdiMenuLeft, mdiMenuRight } from '@mdi/js';
+import Icon from "@mdi/react";
+
 
 export interface SliderPanelProps {
     min: number,
@@ -108,6 +111,7 @@ export class SliderPanel extends React.Component<SliderPanelProps, SliderPanelSt
                         onPointerDown={e => {e.preventDefault(); e.stopPropagation()}}
                         onClick={e => this.clickedStepButton(e, currentValue - step)}
                     >
+                        <Icon path={mdiMenuLeft} size={0.8}/>
                         <span className="step-label">{'-' + step}</span>
                     </div>
                     <span className="central-label">{labelText + ": " + currentValue}</span>
@@ -117,6 +121,7 @@ export class SliderPanel extends React.Component<SliderPanelProps, SliderPanelSt
                         onClick={e => this.clickedStepButton(e, currentValue + step)}
                     >
                         <span className="step-label">{'+' + step}</span>
+                        <Icon path={mdiMenuRight} size={0.8}/>
                     </div>
                 </div>
                 <div className="stretch" />

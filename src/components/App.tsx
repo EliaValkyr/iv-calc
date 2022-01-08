@@ -7,6 +7,8 @@ import { MAX_LEVEL } from './../constants';
 import { Clamp } from './../utils';
 import { Box, Tab } from '@mui/material';
 import { CalculatorType } from '../enums/CalculatorType';
+import Icon from '@mdi/react';
+import { mdiDna, mdiChartBar } from '@mdi/js';
 
 interface AppProps {
 
@@ -68,8 +70,16 @@ class App extends React.Component<AppProps, AppState> {
                                     this.setState({ currentTab: v })
                                 }}
                             >
-                                <Tab label="IV Calculator" />
-                                <Tab label="Stat Calculator" />
+                            <Tab
+                                icon={<Icon path={mdiDna} size={1}/>}
+                                iconPosition="start"
+                                label="IV Calculator"
+                            />
+                            <Tab
+                                icon={<Icon path={mdiChartBar} size={1}/>}
+                                iconPosition="start"
+                                label="Stat Calculator"
+                            />
                             </Tabs>
                         </Box>
 

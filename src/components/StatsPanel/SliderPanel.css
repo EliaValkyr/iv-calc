@@ -46,10 +46,10 @@
     padding: 0px 5px;
     align-self: stretch;
     align-items: center;
+    justify-items: center;
 }
 
 .step-label {
     font-size: 12px;
-    width: 2em;
     text-align: center;
 }
