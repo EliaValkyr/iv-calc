@@ -13,7 +13,7 @@ export interface SliderPanelProps {
     currentValue: number,
     labelText: string,
     panelType: SliderPanelType,
-    onValueChanged: ((value: string) => void),
+    onValueChanged: ((value: number) => void),
 }
 
 interface SliderPanelState {
@@ -38,7 +38,7 @@ export class SliderPanel extends React.Component<SliderPanelProps, SliderPanelSt
             e.preventDefault()
             const valueDelta = - step * Math.sign(e.deltaY)
             const newValue = currentValue + valueDelta
-            onValueChanged(newValue.toString())
+            onValueChanged(newValue)
         }
         this.rootRef.current!.addEventListener('wheel', this.wheelListener)
     }
@@ -50,13 +50,13 @@ export class SliderPanel extends React.Component<SliderPanelProps, SliderPanelSt
     clickedExtremesButton(e: React.MouseEvent<HTMLDivElement>, value: number) {
         e.preventDefault()
         e.stopPropagation()
-        this.props.onValueChanged(value.toString())
+        this.props.onValueChanged(value)
     }
 
     clickedStepButton(e: React.MouseEvent<HTMLDivElement>, value: number) {
         e.preventDefault()
         e.stopPropagation()
-        this.props.onValueChanged(Clamp(value, this.props.min, this.props.max).toString())
+        this.props.onValueChanged(Clamp(value, this.props.min, this.props.max))
     }
 
     render() {
@@ -86,7 +86,7 @@ export class SliderPanel extends React.Component<SliderPanelProps, SliderPanelSt
                         const relativeMovement = (mouseCurrentX - this.state.mouseOriginX) / totalWidth
                         const valueDelta = Math.round((max - min) * relativeMovement / this.props.step) * step
                         const newValue = Clamp(this.state.valueWhenPressed + valueDelta, min, max)
-                        onValueChanged(newValue.toString())
+                        onValueChanged(newValue)
                     }
                 }}
                 onPointerUp={e => {
@@ -94,7 +94,7 @@ export class SliderPanel extends React.Component<SliderPanelProps, SliderPanelSt
                 }}
                 onPointerCancel={e => {
                     this.setState({ isMousePressed: false })
-                    onValueChanged(this.state.valueWhenPressed.toString())
+                    onValueChanged(this.state.valueWhenPressed)
                 }}
             >
                 <div

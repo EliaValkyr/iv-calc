@@ -16,14 +16,15 @@ export interface StatPanelProps {
     panelType: CalculatorType,
     statType: StatType,
     baseStat: number,
+    ev: number,
     level: number,
     nature: Nature,
+    onEVValueChanged: ((value: number) => void),
 }
 
 interface StatPanelState {
-    ivString: string
-    evString: string,
-    finalStatString: string,
+    iv: number,
+    finalStat: number,
 }
 
 export class StatPanel extends React.Component<StatPanelProps, StatPanelState> {
@@ -32,36 +33,21 @@ export class StatPanel extends React.Component<StatPanelProps, StatPanelState> {
         super(props)
 
         const { statType, baseStat, level, nature } = this.props
-        const finalStat = computeMinFinalStat(statType, baseStat, /*ev*/ 0, level, nature.getMultiplier(statType))
-        this.state = { ivString: '0', evString: '0', finalStatString: finalStat.toString() }
+        this.state = { iv: 0, finalStat: computeFinalStat(statType, baseStat, /*ev*/ 0, /*iv*/ 0, level, nature.getMultiplier(statType)) }
     }
 
-    getEV(): number {
-        const ev = parseInt(this.state.evString)
-        return isNaN(ev) ? 0 : ev
-    }
-
-    getIV(): number {
-        const iv = parseInt(this.state.ivString)
-        return isNaN(iv) ? 0 : iv
-    }
-
-    recomputeLimits() {
-        const { panelType, statType, baseStat, level, nature } = this.props
-        const { finalStatString } = this.state
+    static getDerivedStateFromProps(props: StatPanelProps, state: StatPanelState) {
+        const { panelType, statType, baseStat, ev, level, nature } = props
+        const { finalStat } = state
 
         if (panelType === CalculatorType.IVCalculator) {
-            const finalStat = parseInt(finalStatString)
-            if (isNaN(finalStat)) {
-                const natureMult = nature.getMultiplier(statType)
-
-                const minFinalStat = computeMinFinalStat(statType, baseStat, this.getEV(), level, natureMult)
-                const maxFinalStat = computeMaxFinalStat(statType, baseStat, this.getEV(), level, natureMult)
-                const cappedFinalStatValue = Clamp(finalStat, minFinalStat, maxFinalStat)
-                this.setState({ finalStatString: cappedFinalStatValue.toString() })
-            }
+            const natureMult = nature.getMultiplier(statType)
+            const minFinalStat = computeMinFinalStat(statType, baseStat, ev, level, natureMult)
+            const maxFinalStat = computeMaxFinalStat(statType, baseStat, ev, level, natureMult)
+            const cappedFinalStat = Clamp(finalStat, minFinalStat, maxFinalStat)
+            return { finalStat: cappedFinalStat }
         }
-
+        return null; // No change to state
     }
 
     renderResultPanel(statCalcFinalStat: number, ivCalcOptIVRange: [number, number] | undefined) {
@@ -77,15 +63,9 @@ export class StatPanel extends React.Component<StatPanelProps, StatPanelState> {
 
         if (panelType === CalculatorType.FinalStatCalculator) {
 
-            const ivValueChanged = (ivString: string) => {
-                const ivValue = parseInt(ivString)
-                if (isNaN(ivValue))
-                    this.setState({ ivString: ivString })
-                else {
-                    const sanitizedIVValue = Clamp(ivValue, 0, MAX_IV)
-                    this.setState({ ivString: sanitizedIVValue.toString() })
-                }
-                this.recomputeLimits()
+            const ivValueChanged = (newIV: number) => {
+                const sanitizedIV = Clamp(newIV, 0, MAX_IV)
+                this.setState({ iv: sanitizedIV })
             }
 
             return (
@@ -94,21 +74,18 @@ export class StatPanel extends React.Component<StatPanelProps, StatPanelState> {
                     min={0}
                     max={MAX_IV}
                     step={1}
-                    currentValue={this.getIV()}
+                    currentValue={this.state.iv}
                     labelText="IVs"
                     onValueChanged={ivValueChanged}
                 />
             )
         } else {
-
-            const finalStatValueChanged = (finalStatString: string) => {
-                this.setState({ finalStatString: finalStatString })
-                this.recomputeLimits()
+            const finalStatValueChanged = (newFinalStat: number) => {
+                this.setState({ finalStat: newFinalStat })
             }
 
             return (
                 <SliderPanel
-                    key={level + " " + baseStat + " " + nature}
                     panelType={SliderPanelType.FinalStat}
                     min={ivCalcMinFinalStat}
                     max={ivCalcMaxFinalStat}
@@ -122,34 +99,19 @@ export class StatPanel extends React.Component<StatPanelProps, StatPanelState> {
     }
 
     render() {
-        const { statType, baseStat, level, nature } = this.props
-        const { finalStatString } = this.state
+        const { statType, baseStat, ev, level, nature, onEVValueChanged } = this.props
+        const { iv, finalStat } = this.state
 
-        const evValueChanged = (evString: string) => {
-            const evValue = parseInt(evString)
-            if (isNaN(evValue))
-                this.setState({ evString: evString })
-            else {
-                const sanitizedEVValue = Clamp(evValue, 0, MAX_EV)
-                this.setState({ evString: sanitizedEVValue.toString() })
-            }
-            this.recomputeLimits()
-        }
-
-        const ev = this.getEV()
         const natureMult = nature.getMultiplier(statType)
 
         // Needed for the IV Calculator.
         const ivCalcMinFinalStat = computeMinFinalStat(statType, baseStat, ev, level, natureMult)
         const ivCalcMaxFinalStat = computeMaxFinalStat(statType, baseStat, ev, level, natureMult)
-        const ivCalcFinalStat = parseInt(finalStatString)
-        const ivCalcActualFinalStat = isNaN(ivCalcFinalStat) ? ivCalcMinFinalStat : Clamp(ivCalcFinalStat, ivCalcMinFinalStat, ivCalcMaxFinalStat)
-        const ivCalcOptIVRange = computeIVRange(statType, baseStat, ev, level, natureMult, ivCalcActualFinalStat)
+        const ivCalcFinalStat = Clamp(finalStat, ivCalcMinFinalStat, ivCalcMaxFinalStat)
+        const ivCalcOptIVRange = computeIVRange(statType, baseStat, ev, level, natureMult, ivCalcFinalStat)
 
         // Needed for the Final Stat Calculator.
-        const statCalcIV = this.getIV()
-        const statCalcFinalStat = computeFinalStat(statType, baseStat, ev, statCalcIV, level, natureMult)
-
+        const statCalcFinalStat = computeFinalStat(statType, baseStat, ev, iv, level, natureMult)
 
         return (
             <div className="stat-panel">
@@ -166,10 +128,10 @@ export class StatPanel extends React.Component<StatPanelProps, StatPanelState> {
                         step={EV_STEP}
                         currentValue={ev}
                         labelText="EVs"
-                        onValueChanged={evValueChanged}
+                        onValueChanged={onEVValueChanged}
                     />
 
-                    {this.renderSecondSlider(ivCalcMinFinalStat, ivCalcMaxFinalStat, ivCalcActualFinalStat)}
+                    {this.renderSecondSlider(ivCalcMinFinalStat, ivCalcMaxFinalStat, ivCalcFinalStat)}
                 </div>
                 {this.renderResultPanel(statCalcFinalStat, ivCalcOptIVRange)}
             </div>

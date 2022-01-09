@@ -2,3 +2,17 @@
     display: flex;
     flex-direction: column;
 }
+
+.remaining-ev-label {
+    align-self: center;
+    padding: 15px 0px;
+    font-size: 1.2em;
+}
+
+.pos-remaining-ev-color {
+    color: rgba(var(--nordBlack), 1);
+}
+
+.neg-remaining-ev-color {
+    color: rgba(var(--negativeRemainingEVColor), 1);
+}

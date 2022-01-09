@@ -10,6 +10,8 @@
 
     --positiveNatureColor: 76, 159, 112;
     --negativeNatureColor: 186, 50, 79;
+
+    --negativeRemainingEVColor: 186, 50, 79;
 }
 
 body {
