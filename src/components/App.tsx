@@ -73,12 +73,13 @@ class App extends React.Component<AppProps, AppState> {
                             <Tab
                                 icon={<Icon path={mdiDna} size={1}/>}
                                 iconPosition="start"
-                                label="IV Calculator"
+                                label={<span className={"tab-title"}>IV Calculator</span>}
                             />
                             <Tab
+                                className="tab-title"
                                 icon={<Icon path={mdiChartBar} size={1}/>}
                                 iconPosition="start"
-                                label="Stat Calculator"
+                                label={<span className={"tab-title"}>Stat Calculator</span>}
                             />
                             </Tabs>
                         </Box>

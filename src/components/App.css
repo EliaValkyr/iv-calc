@@ -5,3 +5,9 @@
     background-color: rgba(var(--nordWhite), 1);
     gap: 10px;
 }
+
+@media screen and (max-width: 400px) {
+    .tab-title {
+        font-size: 0.8em;
+    }
+}

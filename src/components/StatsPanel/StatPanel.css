@@ -1,15 +1,12 @@
 .stat-panel {
     display: flex;
     flex-direction: row;
-    border-bottom: 1px solid gray;
-}
-.stat-panel:last-child {
-    border-bottom: none;
+    border-top: 1px solid gray;
 }
 
 @media screen and (max-width: 500px) {
     .stat-panel {
-        border-bottom: 2px solid rgba(var(--nordBlack), 1);
+        border-top: 2px solid rgba(var(--nordBlack), 1);
     }
 }
 
