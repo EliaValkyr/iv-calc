@@ -50,7 +50,7 @@ export class AllBaseStatsPanel extends React.Component<AllBaseStatsPanelProps, A
                 nature={nature}
                 onEVValueChanged={newEV => {
                     const sanitizedEV = Clamp(newEV, 0, MAX_EV)
-                    this.setState({ ...this.state, [evStateKey]: newEV })
+                    this.setState({ ...this.state, [evStateKey]: sanitizedEV })
                 }}
             />)
     }
