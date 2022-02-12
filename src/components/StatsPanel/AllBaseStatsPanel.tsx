@@ -71,7 +71,7 @@ export class AllBaseStatsPanel extends React.Component<AllBaseStatsPanelProps, A
         
         return (
             <div
-                className="container"
+                className="all-base-stats-container"
                 hidden={hidden}
             >
                 <div className="all-base-stats-panel">
