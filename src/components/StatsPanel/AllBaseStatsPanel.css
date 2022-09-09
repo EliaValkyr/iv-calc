@@ -3,10 +3,13 @@
     flex-direction: column;
 }
 
-.remaining-ev-label {
-    align-self: center;
+.remaining-ev-panel {
+    display: flex;
+    flex-direction: row;
     padding: 15px 0px;
-    font-size: 1.2em;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
 }
 
 .pos-remaining-ev-color {

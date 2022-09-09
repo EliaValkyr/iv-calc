@@ -7,6 +7,9 @@ import { Nature, natureArray } from '../../nature';
 import { CalculatorType } from '../../enums/CalculatorType';
 import { MAX_EV, MAX_EV_SUM } from '../../constants';
 import { Clamp } from '../../utils';
+import Icon from '@mdi/react';
+import IconButton from '@mui/material/Button';
+import { mdiRestart } from '@mdi/js';
 
 export interface AllBaseStatsPanelProps {
     panelType: CalculatorType,
@@ -55,6 +58,17 @@ export class AllBaseStatsPanel extends React.Component<AllBaseStatsPanelProps, A
             />)
     }
 
+    resetEVs() {
+        this.setState({
+            hpEV: 0,
+            atkEV: 0,
+            defEV: 0,
+            spaEV: 0,
+            spdEV: 0,
+            speEV: 0,
+        })
+    }
+
     render() {
         const { panelType, hidden, level, species, natureString } = this.props
         const { hpEV, atkEV, defEV, spaEV, spdEV, speEV } = this.state
@@ -76,7 +90,20 @@ export class AllBaseStatsPanel extends React.Component<AllBaseStatsPanelProps, A
                 tabIndex={0}
             >
                 <div className="all-base-stats-panel">
-                    <span className={"remaining-ev-label " + labelColorClassName}>{"EVs remaining: " + evRemaining}</span>
+                    <span className="remaining-ev-panel">
+                        <span className={"remaining-ev-label " + labelColorClassName}>{"EVs remaining: " + evRemaining}</span>
+
+                        <IconButton 
+                            title="Reset EVs"
+                            color="error"
+                            onClick={e => this.resetEVs() }
+                        >
+                            <Icon 
+                                path={mdiRestart} 
+                                size={1}
+                            />
+                        </IconButton>
+                    </span>
                     {this.renderStatPanel(StatType.HP, 'hpEV', pokemonData ? pokemonData!.HP : 1, nature)}
                     {this.renderStatPanel(StatType.Attack, 'atkEV', pokemonData ? pokemonData!.Attack : 1, nature)}
                     {this.renderStatPanel(StatType.Defense, 'defEV', pokemonData ? pokemonData!.Defense : 1, nature)}
