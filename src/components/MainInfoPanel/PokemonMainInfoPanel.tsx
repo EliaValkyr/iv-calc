@@ -1,6 +1,6 @@
 import React from 'react';
 import "./PokemonMainInfoPanel.css"
-import { SPECIES_SPRITE_FOLDER } from '../../constants';
+import { SPECIES_SPRITE_FOLDER, TYPES_SPRITE_FOLDER } from '../../constants';
 import allPokemonData from '../../PokemonData.json'
 import { TextField } from '@mui/material';
 import { SpeciesAutocomplete } from './SpeciesAutocomplete';
@@ -20,14 +20,35 @@ export class PokemonMainInfoPanel extends React.Component<PokemonMainInfoPanelPr
     render() {
         const pokemonData = allPokemonData.find(x => x.Species.toLowerCase() === this.props.species.toLowerCase())
         const spritePath = pokemonData === undefined ? "unknown.png" : pokemonData.Sprite
+        const type1 = "fire";
+        const type2 = "fighting";
 
         return (
             <div className="pokemon-main-info-panel">
-                <img
-                    alt="Sprite of the pokemon"
-                    className="pokemon-sprite"
-                    src={SPECIES_SPRITE_FOLDER + spritePath}
-                />
+                <div className="pokemon-sprite-and-type">
+                    <img
+                        alt="Sprite of the pokemon"
+                        className="pokemon-sprite"
+                        src={SPECIES_SPRITE_FOLDER + spritePath}
+                    />
+                    <div className="pokemon-types">
+                        <img
+                            alt="First type of the pokemon"
+                            className="type1-sprite"
+                            src={TYPES_SPRITE_FOLDER + type1 + ".gif"}
+                        />
+                        {
+                            type2 ? 
+                                <img
+                                    alt="Second type of the pokemon"
+                                    className="type2-sprite"
+                                    src={TYPES_SPRITE_FOLDER + type2 + ".gif"}
+                                />
+                                :
+                                null
+                        }
+                    </div>
+                </div>
                 <div className="data-pickers-panel">
                     <SpeciesAutocomplete
                         species={this.props.species}

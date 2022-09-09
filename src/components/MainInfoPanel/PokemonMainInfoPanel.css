@@ -6,6 +6,25 @@
     gap: 40px;
 }
 
+.pokemon-sprite-and-type {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.pokemon-types {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+}
+
+.pokemon-types img {
+    width: 40px;
+}
+
 .data-pickers-panel {
     flex: 1;
     display: flex;
