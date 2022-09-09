@@ -75,6 +75,9 @@ export class SpeciesAutocomplete extends React.Component<SpeciesAutocompleteProp
                 }}
                 inputValue={this.props.species}
                 onInputChange={(_, newInputValue) => {
+                    if (newInputValue === pokemonData.Species) 
+                        return
+
                     this.props.onSpeciesChanged(newInputValue)
                 }}
                 isOptionEqualToValue={(option, value) => {
