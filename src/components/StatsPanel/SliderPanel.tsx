@@ -49,14 +49,18 @@ export class SliderPanel extends React.Component<SliderPanelProps, SliderPanelSt
 
     clickedExtremesButton(e: React.MouseEvent<HTMLDivElement>, value: number) {
         e.preventDefault()
+        this.rootRef.current!.focus()
         e.stopPropagation()
         this.props.onValueChanged(value)
     }
 
-    clickedStepButton(e: React.MouseEvent<HTMLDivElement>, value: number) {
+    clickedStepButton(e: React.UIEvent<HTMLDivElement>, sign: number) {
         e.preventDefault()
+        this.rootRef.current!.focus()
         e.stopPropagation()
-        this.props.onValueChanged(Clamp(value, this.props.min, this.props.max))
+
+        const { min, max, step, currentValue } = this.props
+        this.props.onValueChanged(Clamp(currentValue + sign * step, min, max))
     }
 
     render() {
@@ -69,12 +73,14 @@ export class SliderPanel extends React.Component<SliderPanelProps, SliderPanelSt
             <div
                 ref={this.rootRef}
                 className={"slider-panel"}
+                tabIndex={0} // Add a tab index so that the slider is focusable.
                 style={{
                     background: 'linear-gradient(90deg, #' + rgbColor + 'D0 ' + (100 * valueFrac) + '%, #' + rgbColor + '60 ' + (100 * valueFrac) + '%)',
                     cursor: 'ew-resize'
                 }}
                 onPointerDown={e => {
                     e.preventDefault()
+                    this.rootRef.current!.focus()
                     e.currentTarget.setPointerCapture(e.pointerId)
                     this.setState({ isMousePressed: true, valueWhenPressed: this.props.currentValue, mouseOriginX: e.clientX - e.currentTarget.getBoundingClientRect().left })
                 }}
@@ -96,6 +102,18 @@ export class SliderPanel extends React.Component<SliderPanelProps, SliderPanelSt
                     this.setState({ isMousePressed: false })
                     onValueChanged(this.state.valueWhenPressed)
                 }}
+                onKeyDown={e => {
+                    switch (e.key) {
+                        case "ArrowDown":
+                        case "ArrowLeft":
+                            this.clickedStepButton(e, -1)
+                            break
+                        case "ArrowUp":
+                        case "ArrowRight":
+                            this.clickedStepButton(e, +1)
+                            break
+                    } 
+                }}
             >
                 <div
                     className="extremes-panel"
@@ -109,7 +127,7 @@ export class SliderPanel extends React.Component<SliderPanelProps, SliderPanelSt
                     <div
                         className="step-panel"
                         onPointerDown={e => {e.preventDefault(); e.stopPropagation()}}
-                        onClick={e => this.clickedStepButton(e, currentValue - step)}
+                        onClick={e => this.clickedStepButton(e, -1)}
                     >
                         <Icon path={mdiMenuLeft} size={0.8}/>
                         <span className="step-label">{'-' + step}</span>
@@ -118,7 +136,7 @@ export class SliderPanel extends React.Component<SliderPanelProps, SliderPanelSt
                     <div
                         className="step-panel"
                         onPointerDown={e => {e.preventDefault(); e.stopPropagation()}}
-                        onClick={e => this.clickedStepButton(e, currentValue + step)}
+                        onClick={e => this.clickedStepButton(e, +1)}
                     >
                         <span className="step-label">{'+' + step}</span>
                         <Icon path={mdiMenuRight} size={0.8}/>

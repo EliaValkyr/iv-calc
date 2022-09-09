@@ -73,6 +73,7 @@ export class AllBaseStatsPanel extends React.Component<AllBaseStatsPanelProps, A
             <div
                 className="all-base-stats-container"
                 hidden={hidden}
+                tabIndex={0}
             >
                 <div className="all-base-stats-panel">
                     <span className={"remaining-ev-label " + labelColorClassName}>{"EVs remaining: " + evRemaining}</span>
