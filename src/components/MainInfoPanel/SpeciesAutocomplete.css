@@ -22,10 +22,31 @@
     color: gray;
 }
 
-
+.tooltip-species {
+    font-size: 14px;
+}
 @media screen and (max-width: 390px) {
     .tooltip-base-stat-panel {
-        width: 1.8em;
+        width: 1.7em;
+    }
+
+    .tooltip-species {
+        font-size: 12px;
+    }
+}
+
+
+@media screen and (max-width: 340px) {
+    .tooltip-base-stat-panel {
+        width: 1.3em;
     }
     
+    .tooltip-base-stat-text {
+        font-size: 10px;
+    }
+    
+    .tooltip-species {
+        font-size: 10px;
+
+    }
 }

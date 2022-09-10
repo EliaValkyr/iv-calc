@@ -102,7 +102,7 @@ export class SpeciesAutocomplete extends React.Component<SpeciesAutocompleteProp
                             src={SPECIES_SPRITE_FOLDER + pokemonData.Sprite}
                         />
                         <div style={{ display: 'flex', flexDirection: 'column' }}>
-                            <span style={{ whiteSpace: 'nowrap' }}>{"#" + pokemonData.ID + " - " + pokemonData.Species}</span>
+                            <span className="tooltip-species" style={{ whiteSpace: 'nowrap' }}>{"#" + pokemonData.ID + " - " + pokemonData.Species}</span>
                             <div style={{ display: 'flex', flexDirection: 'row' }}>
                                 {this.renderTooltipBaseStat(StatType.HP, pokemonData.HP)}
                                 {this.renderTooltipBaseStat(StatType.Attack, pokemonData.Attack)}
