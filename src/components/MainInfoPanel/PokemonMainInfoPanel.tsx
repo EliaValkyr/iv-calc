@@ -20,10 +20,8 @@ export class PokemonMainInfoPanel extends React.Component<PokemonMainInfoPanelPr
     render() {
         const pokemonData = allPokemonData.find(x => x.Species.toLowerCase() === this.props.species.toLowerCase())
         const spritePath = pokemonData === undefined ? "unknown.png" : pokemonData.Sprite
-        const type1 = pokemonData === undefined ? null : pokemonData.Type1.toLowerCase();
-        const type2 = pokemonData === undefined || pokemonData.Type2 == "None" ? null : pokemonData.Type2.toLowerCase();
-
-        console.log(type1, type2)
+        const type1 = pokemonData === undefined ? null : pokemonData.Type1.toLowerCase()
+        const type2 = pokemonData === undefined || pokemonData.Type2 == "None" ? null : pokemonData.Type2.toLowerCase()
 
         return (
             <div className="pokemon-main-info-panel">

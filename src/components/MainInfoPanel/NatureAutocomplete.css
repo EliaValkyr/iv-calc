@@ -8,8 +8,16 @@
     width: 4.3em;
 }
 
+.nature-autocomplete-stats {
+    display: flex;
+    gap: 5px;
+    margin-left: 5px;
+}
 
 @media screen and (max-width: 370px) {
+    .nature-autocomplete-text {
+        font-size: 12px;
+    }
     .nature-autocomplete-detail-text {
         font-size: 12px;
     }

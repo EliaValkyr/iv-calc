@@ -4,6 +4,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import { Nature, natureArray } from '../../nature';
 import { TextField } from '@mui/material';
 import { Box } from '@mui/system';
+import { STATS_SPRITE_FOLDER } from '../../constants';
 
 export interface NatureAutocompleteProps {
     natureString: string,
@@ -21,11 +22,14 @@ export class NatureAutocomplete extends React.Component<NatureAutocompleteProps>
                 options={natureArray}
                 getOptionLabel={(nature) => nature.mName}
                 value={natureData}
-                onChange={(event, newNature) => {
+                onChange={(_, newNature) => {
                     this.props.onNatureChanged(newNature ? newNature!.mName : "")
                 }}
                 inputValue={this.props.natureString}
-                onInputChange={(event, newInputValue) => {
+                onInputChange={(_, newInputValue) => {
+                    if (newInputValue === (natureData ? natureData!.mName : ""))
+                        return
+
                     this.props.onNatureChanged(newInputValue)
                 }}
                 isOptionEqualToValue={(option, value) => {
@@ -44,11 +48,26 @@ export class NatureAutocomplete extends React.Component<NatureAutocompleteProps>
                         {...props}
                     >
                         <span className="nature-autocomplete-text">{nature.mName}</span>
-                        <span className="nature-autocomplete-detail-text">{nature.mIncreasedStat || nature.mDecreasedStat ? "(" : ""}</span>
-                        <span className="nature-autocomplete-detail-text" style={{ color: 'green' }}>{nature.mIncreasedStat ? "+" + nature.mIncreasedStat : ""}</span>
-                        <span className="nature-autocomplete-detail-text">{nature.mIncreasedStat && nature.mDecreasedStat ? "," : ""}</span>{" "}
-                        <span className="nature-autocomplete-detail-text" style={{ color: 'red' }}>{nature.mDecreasedStat ? "-" + nature.mDecreasedStat : ""}</span>
-                        <span className="nature-autocomplete-detail-text">{nature.mIncreasedStat || nature.mDecreasedStat ? ")" : ""}</span>
+                        <div className="nature-autocomplete-stats">
+                            {
+                                nature.mIncreasedStat ? 
+                                    <img
+                                        alt="Increased Stat"
+                                        decoding="async"
+                                        src={STATS_SPRITE_FOLDER + nature.mIncreasedStat + "Up.gif"}
+                                    />
+                                    : null
+                            }
+                            {
+                                nature.mDecreasedStat ? 
+                                    <img
+                                        alt="Decreased Stat"
+                                        decoding="async"
+                                        src={STATS_SPRITE_FOLDER + nature.mDecreasedStat + "Down.gif"}
+                                    />
+                                    : null
+                            }
+                        </div>
                     </Box>
                 )}
             />

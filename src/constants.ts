@@ -7,3 +7,4 @@ export const NATURE_INCREASE_MULT = 1.1
 export const NATURE_DECREASE_MULT = 0.9
 export const SPECIES_SPRITE_FOLDER = `${process.env.PUBLIC_URL}/resources/sprites/species/`
 export const TYPES_SPRITE_FOLDER = `${process.env.PUBLIC_URL}/resources/sprites/types/`
+export const STATS_SPRITE_FOLDER = `${process.env.PUBLIC_URL}/resources/sprites/stats/`
