@@ -5,6 +5,7 @@ import allPokemonData from '../../PokemonData.json'
 import { TextField } from '@mui/material';
 import { SpeciesAutocomplete } from './SpeciesAutocomplete';
 import { NatureAutocomplete } from './NatureAutocomplete';
+import Button from '@mui/material/Button';
 
 export interface PokemonMainInfoPanelProps {
     levelString: string,
@@ -60,6 +61,27 @@ export class PokemonMainInfoPanel extends React.Component<PokemonMainInfoPanelPr
                         onSpeciesChanged={this.props.onSpeciesChanged}
                     />
                     <div className="level-nature-panel">
+                        <div className="preset-level-panel">
+
+                            <Button
+                                title="50"
+                                variant="outlined"
+                                color="inherit"
+                                style={{minWidth: '20px', maxWidth: '20px', maxHeight: '25px'}}
+                                onClick={e => this.props.onLevelChanged("50") }
+                            >
+                                50
+                            </Button>
+                            <Button
+                                title="100"
+                                variant="outlined"
+                                color="inherit"
+                                style={{minWidth: '20px', maxWidth: '20px', maxHeight: '25px'}}
+                                onClick={e => this.props.onLevelChanged("100") }
+                            >
+                                100
+                            </Button>
+                        </div>
                         <TextField
                             label="Level"
                             type="number"

@@ -95,7 +95,8 @@ export class AllBaseStatsPanel extends React.Component<AllBaseStatsPanelProps, A
 
                         <IconButton 
                             title="Reset EVs"
-                            color="error"
+                            color="inherit"
+                            style={{minWidth: '40px', maxWidth: '40px', maxHeight: '25px'}}
                             onClick={e => this.resetEVs() }
                         >
                             <Icon 
