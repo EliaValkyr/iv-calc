@@ -20,8 +20,10 @@ export class PokemonMainInfoPanel extends React.Component<PokemonMainInfoPanelPr
     render() {
         const pokemonData = allPokemonData.find(x => x.Species.toLowerCase() === this.props.species.toLowerCase())
         const spritePath = pokemonData === undefined ? "unknown.png" : pokemonData.Sprite
-        const type1 = "fire";
-        const type2 = "fighting";
+        const type1 = pokemonData === undefined ? null : pokemonData.Type1.toLowerCase();
+        const type2 = pokemonData === undefined || pokemonData.Type2 == "None" ? null : pokemonData.Type2.toLowerCase();
+
+        console.log(type1, type2)
 
         return (
             <div className="pokemon-main-info-panel">
@@ -32,11 +34,16 @@ export class PokemonMainInfoPanel extends React.Component<PokemonMainInfoPanelPr
                         src={SPECIES_SPRITE_FOLDER + spritePath}
                     />
                     <div className="pokemon-types">
-                        <img
-                            alt="First type of the pokemon"
-                            className="type1-sprite"
-                            src={TYPES_SPRITE_FOLDER + type1 + ".gif"}
-                        />
+                        {
+                            type1 ? 
+                                <img
+                                    alt="First type of the pokemon"
+                                    className="type1-sprite"
+                                    src={TYPES_SPRITE_FOLDER + type1 + ".gif"}
+                                />
+                                :
+                                null
+                        }
                         {
                             type2 ? 
                                 <img
