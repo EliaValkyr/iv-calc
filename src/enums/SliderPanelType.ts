@@ -7,11 +7,11 @@ export enum SliderPanelType {
 export function getRGBColor(panelType: SliderPanelType): string {
     switch (panelType) {
         case SliderPanelType.FinalStat:
-            return "ffcb47"
+            return "FFc125"
         case SliderPanelType.EV:
-            return "227c9d"
+            return "0070FF"
         case SliderPanelType.IV:
-            return "ba324f"
+            return "E60015"
     }
     return "000000"
 }
