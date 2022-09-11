@@ -54,7 +54,7 @@ export class NatureAutocomplete extends React.Component<NatureAutocompleteProps>
                                     <img
                                         alt="Increased Stat"
                                         decoding="async"
-                                        src={STATS_SPRITE_FOLDER + nature.mIncreasedStat + "Up.gif"}
+                                        src={STATS_SPRITE_FOLDER + nature.mIncreasedStat + "Up.png"}
                                     />
                                     : null
                             }
@@ -63,7 +63,7 @@ export class NatureAutocomplete extends React.Component<NatureAutocompleteProps>
                                     <img
                                         alt="Decreased Stat"
                                         decoding="async"
-                                        src={STATS_SPRITE_FOLDER + nature.mDecreasedStat + "Down.gif"}
+                                        src={STATS_SPRITE_FOLDER + nature.mDecreasedStat + "Down.png"}
                                     />
                                     : null
                             }
