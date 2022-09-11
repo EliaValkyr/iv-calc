@@ -25,7 +25,7 @@
 .tooltip-species {
     font-size: 14px;
 }
-@media screen and (max-width: 390px) {
+@media screen and (max-width: 410px) {
     .tooltip-base-stat-panel {
         width: 1.7em;
     }
@@ -36,7 +36,7 @@
 }
 
 
-@media screen and (max-width: 340px) {
+@media screen and (max-width: 361px) {
     .tooltip-base-stat-panel {
         width: 1.3em;
     }

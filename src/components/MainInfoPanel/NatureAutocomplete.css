@@ -1,4 +1,3 @@
-
 .nature-autocomplete {
     text-align: center;
     flex: 1;
@@ -11,14 +10,13 @@
 .nature-autocomplete-stats {
     display: flex;
     gap: 5px;
-    margin-left: 5px;
+    margin-left: 10px;
 }
 
-@media screen and (max-width: 370px) {
-    .nature-autocomplete-text {
-        font-size: 12px;
+@media screen and (max-width: 310px) {
+    .nature-autocomplete-stats {
+        flex-direction: column;
+        gap: 3px;
     }
-    .nature-autocomplete-detail-text {
-        font-size: 12px;
-    }
+    
 }
