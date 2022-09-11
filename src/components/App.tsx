@@ -25,7 +25,7 @@ class App extends React.Component<AppProps, AppState> {
     constructor(props: AppProps) {
         super(props)
 
-        this.state = { species: "Blaziken", levelString: '100', natureString: "Adamant", currentTab: 0 }
+        this.state = { species: "Blaziken", levelString: '50', natureString: "Adamant", currentTab: 0 }
     }
 
     render() {

@@ -125,20 +125,18 @@ export class SliderPanel extends React.Component<SliderPanelProps, SliderPanelSt
                 <div className="stretch" />
                 <div className="central-panel">
                     <div
-                        className="step-panel"
+                        className="step-panel left"
                         onPointerDown={e => {e.preventDefault(); e.stopPropagation()}}
                         onClick={e => this.clickedStepButton(e, -1)}
                     >
                         <Icon path={mdiMenuLeft} size={0.8}/>
-                        <span className="step-label">{'-' + step}</span>
                     </div>
                     <span className="central-label">{labelText + ": " + currentValue}</span>
                     <div
-                        className="step-panel"
+                        className="step-panel right"
                         onPointerDown={e => {e.preventDefault(); e.stopPropagation()}}
                         onClick={e => this.clickedStepButton(e, +1)}
                     >
-                        <span className="step-label">{'+' + step}</span>
                         <Icon path={mdiMenuRight} size={0.8}/>
                     </div>
                 </div>
