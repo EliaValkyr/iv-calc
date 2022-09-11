@@ -2,11 +2,11 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    padding: 30px 40px;
+    padding: 15px 40px;
     gap: 40px;
 }
 
-.pokemon-sprite-and-type {
+.pokemon-sprite-panel {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -30,20 +30,17 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin: 15px 0px;
     gap: 20px;
     max-width: 300px;
 }
 
-.level-nature-panel {
+.level-panel {
     display: flex;
     flex-direction: row;
-    gap: 15px;
-}
-
-.preset-level-panel {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10px;
+    margin-top: 3px;
+    gap: 5px;
+    align-items: center;
 }
 
 .pokemon-sprite {
@@ -62,9 +59,6 @@
     .data-pickers-panel {
         gap: 15px;
     }
-    .level-nature-panel {
-        gap: 15px;
-    }
 
     .pokemon-main-info-panel {
         padding: 15px 20px;
@@ -74,7 +68,8 @@
 
 @media screen and (max-width: 420px) {
     .pokemon-main-info-panel {
-        padding: 15px 15px;
+        padding: 10px 15px;
+        gap: 15px;
     }
     .pokemon-sprite {
         width: 64px;

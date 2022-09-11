@@ -18,6 +18,25 @@ export interface PokemonMainInfoPanelProps {
 
 export class PokemonMainInfoPanel extends React.Component<PokemonMainInfoPanelProps> {
 
+
+    renderPresetLevelPanel(level: number) {
+        return (
+            
+            <Button
+                title={level.toString()}
+                variant="outlined"
+                color="inherit"
+                size="small"
+                sx={{fontSize: 8}}
+                style={{minWidth: '15px', maxWidth: '15px', maxHeight: '20px'}}
+                onClick={e => this.props.onLevelChanged(level.toString()) }
+            >
+                {level}
+            </Button>
+            )
+    }
+
+
     render() {
         const pokemonData = allPokemonData.find(x => x.Species.toLowerCase() === this.props.species.toLowerCase())
         const spritePath = pokemonData === undefined ? "unknown.png" : pokemonData.Sprite
@@ -26,7 +45,7 @@ export class PokemonMainInfoPanel extends React.Component<PokemonMainInfoPanelPr
 
         return (
             <div className="pokemon-main-info-panel">
-                <div className="pokemon-sprite-and-type">
+                <div className="pokemon-sprite-panel">
                     <img
                         alt="Sprite of the pokemon"
                         className="pokemon-sprite"
@@ -54,39 +73,15 @@ export class PokemonMainInfoPanel extends React.Component<PokemonMainInfoPanelPr
                                 null
                         }
                     </div>
-                </div>
-                <div className="data-pickers-panel">
-                    <SpeciesAutocomplete
-                        species={this.props.species}
-                        onSpeciesChanged={this.props.onSpeciesChanged}
-                    />
-                    <div className="level-nature-panel">
-                        <div className="preset-level-panel">
-
-                            <Button
-                                title="50"
-                                variant="outlined"
-                                color="inherit"
-                                style={{minWidth: '20px', maxWidth: '20px', maxHeight: '25px'}}
-                                onClick={e => this.props.onLevelChanged("50") }
-                            >
-                                50
-                            </Button>
-                            <Button
-                                title="100"
-                                variant="outlined"
-                                color="inherit"
-                                style={{minWidth: '20px', maxWidth: '20px', maxHeight: '25px'}}
-                                onClick={e => this.props.onLevelChanged("100") }
-                            >
-                                100
-                            </Button>
-                        </div>
+                    <div className="level-panel">
+                        {this.renderPresetLevelPanel(50)}
+                        {this.renderPresetLevelPanel(100)}
                         <TextField
-                            label="Level"
+                            placeholder="Level"
                             type="number"
                             variant="standard"
-                            sx={{ width: '50px' }}
+                            sx={{ width: '45px' }}
+                            size="small"
                             InputLabelProps={{
                                 shrink: true,
                             }}
@@ -95,11 +90,17 @@ export class PokemonMainInfoPanel extends React.Component<PokemonMainInfoPanelPr
                                 this.props.onLevelChanged(e.currentTarget.value)
                             }}
                         />
-                        <NatureAutocomplete
-                            natureString={this.props.natureString}
-                            onNatureChanged={this.props.onNatureChanged}
-                        />
                     </div>
+                </div>
+                <div className="data-pickers-panel">
+                    <SpeciesAutocomplete
+                        species={this.props.species}
+                        onSpeciesChanged={this.props.onSpeciesChanged}
+                    />
+                    <NatureAutocomplete
+                        natureString={this.props.natureString}
+                        onNatureChanged={this.props.onNatureChanged}
+                    />
                 </div>
             </div>
         )
