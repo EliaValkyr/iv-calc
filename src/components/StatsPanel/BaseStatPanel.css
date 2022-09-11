@@ -34,3 +34,9 @@
         font-size: 30px;
     }    
 }
+
+@media screen and (max-width: 365px) {
+    .base-stat-panel > .base-stat-value-label {
+        font-size: 14px;
+    }    
+}

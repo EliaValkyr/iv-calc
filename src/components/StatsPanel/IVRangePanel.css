@@ -7,3 +7,25 @@
     gap: 16px;
     padding: 10px;
 }
+
+.value {
+    white-space: nowrap;
+}
+@media screen and (max-width: 365px) {
+    .label {
+        font-size: 14px;
+    }
+    .value {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    .label {
+        font-size: 12px;
+    }
+    .value {
+        font-size: 12px;
+    }
+    
+}
