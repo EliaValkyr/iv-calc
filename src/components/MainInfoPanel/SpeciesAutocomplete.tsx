@@ -26,14 +26,14 @@ export class SpeciesAutocomplete extends React.Component<SpeciesAutocompleteProp
     }
 
     render() {
-        const optPokemonData = allPokemonData.find(x => x.Species.toLowerCase() === this.props.species.toLowerCase())
+        const optPokemonData = allPokemonData.find(x => x.species.toLowerCase() === this.props.species.toLowerCase())
         const pokemonData = optPokemonData === undefined ? allPokemonData[0] : optPokemonData
         const minStringLengthToShowPokemonList = 2
 
         const filterPokemonData = (pokemonDataArray: PokemonData[], filterText: string): PokemonData[] => {
             // I love my beautiful gf so this easter egg is for her <3
             if (filterText === "a")
-                return [pokemonDataArray.find(x => x.Species.toLowerCase() === "surskit")!]
+                return [pokemonDataArray.find(x => x.species.toLowerCase() === "surskit")!]
 
             if (filterText.length < minStringLengthToShowPokemonList)
                 return []
@@ -48,7 +48,7 @@ export class SpeciesAutocomplete extends React.Component<SpeciesAutocompleteProp
             // - Score of 2: The ID value starts with the text.
             // - Score of 3: The ID value contains the text.
             const computeScoreForFiltering = (pokemonData: PokemonData): number => {
-                const fieldsByPriority = [pokemonData.Species, pokemonData.ID.toString()]
+                const fieldsByPriority = [pokemonData.species, pokemonData.id.toString()]
                 const scores = fieldsByPriority.map(field => findIgnoreCase(filterText, field))
                 const scoreIndex = scores.findIndex(score => score !== -1)
                 return scoreIndex === -1 ? -1 : scoreIndex * 2 + scores[scoreIndex]
@@ -66,22 +66,22 @@ export class SpeciesAutocomplete extends React.Component<SpeciesAutocompleteProp
                 options={allPokemonData}
                 classes={{ root: 'species-autocomplete', option: 'species-autocomplete-item' }}
                 autoHighlight={true}
-                getOptionLabel={(pokemonData) => pokemonData.Species}
+                getOptionLabel={(pokemonData) => pokemonData.species}
                 filterOptions={(options, _) => filterPokemonData(options, this.props.species)}
                 value={pokemonData}
                 noOptionsText={this.props.species.length < minStringLengthToShowPokemonList ? "Keep typing..." : "No pokemon found"}
                 onChange={(_, newPokemonData) => {
-                    this.props.onSpeciesChanged(newPokemonData ? newPokemonData!.Species : "")
+                    this.props.onSpeciesChanged(newPokemonData ? newPokemonData!.species : "")
                 }}
                 inputValue={this.props.species}
                 onInputChange={(_, newInputValue) => {
-                    if (newInputValue === pokemonData.Species) 
+                    if (newInputValue === pokemonData.species) 
                         return
 
                     this.props.onSpeciesChanged(newInputValue)
                 }}
                 isOptionEqualToValue={(option, value) => {
-                    return value !== undefined && option.Species === value.Species
+                    return value !== undefined && option.species === value.species
                 }}
                 renderInput={(params) =>
                     <TextField
@@ -99,17 +99,17 @@ export class SpeciesAutocomplete extends React.Component<SpeciesAutocompleteProp
                         <img
                             alt="Sprite of the pokemon"
                             decoding="async"
-                            src={SPECIES_SPRITE_FOLDER + pokemonData.Sprite}
+                            src={SPECIES_SPRITE_FOLDER + pokemonData.sprite}
                         />
                         <div style={{ display: 'flex', flexDirection: 'column' }}>
-                            <span className="tooltip-species" style={{ whiteSpace: 'nowrap' }}>{"#" + pokemonData.ID + " - " + pokemonData.Species}</span>
+                            <span className="tooltip-species" style={{ whiteSpace: 'nowrap' }}>{"#" + pokemonData.id + " - " + pokemonData.species}</span>
                             <div style={{ display: 'flex', flexDirection: 'row' }}>
-                                {this.renderTooltipBaseStat(StatType.HP, pokemonData.HP)}
-                                {this.renderTooltipBaseStat(StatType.Attack, pokemonData.Attack)}
-                                {this.renderTooltipBaseStat(StatType.Defense, pokemonData.Defense)}
-                                {this.renderTooltipBaseStat(StatType.SpAttack, pokemonData.SpAttack)}
-                                {this.renderTooltipBaseStat(StatType.SpDefense, pokemonData.SpDefense)}
-                                {this.renderTooltipBaseStat(StatType.Speed, pokemonData.Speed)}
+                                {this.renderTooltipBaseStat(StatType.HP, pokemonData.hp)}
+                                {this.renderTooltipBaseStat(StatType.Attack, pokemonData.attack)}
+                                {this.renderTooltipBaseStat(StatType.Defense, pokemonData.defense)}
+                                {this.renderTooltipBaseStat(StatType.SpAttack, pokemonData.spattack)}
+                                {this.renderTooltipBaseStat(StatType.SpDefense, pokemonData.spdefense)}
+                                {this.renderTooltipBaseStat(StatType.Speed, pokemonData.speed)}
                             </div>
                         </div>
                     </Box>

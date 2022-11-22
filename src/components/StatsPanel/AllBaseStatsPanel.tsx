@@ -73,7 +73,7 @@ export class AllBaseStatsPanel extends React.Component<AllBaseStatsPanelProps, A
         const { panelType, hidden, level, species, natureString } = this.props
         const { hpEV, atkEV, defEV, spaEV, spdEV, speEV } = this.state
 
-        const pokemonData = data.find(x => x.Species.toLowerCase() === species.toLowerCase())
+        const pokemonData = data.find(x => x.species.toLowerCase() === species.toLowerCase())
 
         const optNature = natureArray.find(x => x.mName === natureString)
         const nature: Nature = optNature === undefined ? new Nature("Dummy") : optNature!
@@ -105,12 +105,12 @@ export class AllBaseStatsPanel extends React.Component<AllBaseStatsPanelProps, A
                             />
                         </IconButton>
                     </span>
-                    {this.renderStatPanel(StatType.HP, 'hpEV', pokemonData ? pokemonData!.HP : 1, nature)}
-                    {this.renderStatPanel(StatType.Attack, 'atkEV', pokemonData ? pokemonData!.Attack : 1, nature)}
-                    {this.renderStatPanel(StatType.Defense, 'defEV', pokemonData ? pokemonData!.Defense : 1, nature)}
-                    {this.renderStatPanel(StatType.SpAttack, 'spaEV', pokemonData ? pokemonData!.SpAttack : 1, nature)}
-                    {this.renderStatPanel(StatType.SpDefense, 'spdEV', pokemonData ? pokemonData!.SpDefense : 1, nature)}
-                    {this.renderStatPanel(StatType.Speed, 'speEV', pokemonData ? pokemonData!.Speed : 1, nature)}
+                    {this.renderStatPanel(StatType.HP, 'hpEV', pokemonData ? pokemonData!.hp : 1, nature)}
+                    {this.renderStatPanel(StatType.Attack, 'atkEV', pokemonData ? pokemonData!.attack : 1, nature)}
+                    {this.renderStatPanel(StatType.Defense, 'defEV', pokemonData ? pokemonData!.defense : 1, nature)}
+                    {this.renderStatPanel(StatType.SpAttack, 'spaEV', pokemonData ? pokemonData!.spattack : 1, nature)}
+                    {this.renderStatPanel(StatType.SpDefense, 'spdEV', pokemonData ? pokemonData!.spdefense : 1, nature)}
+                    {this.renderStatPanel(StatType.Speed, 'speEV', pokemonData ? pokemonData!.speed : 1, nature)}
                 </div>
             </div>
         )
